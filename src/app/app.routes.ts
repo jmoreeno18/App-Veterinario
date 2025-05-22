@@ -7,6 +7,8 @@ import { EmployeeListComponent } from './pages/employees/employee-list/employee-
 import { EmployeeFormComponent } from './pages/employees/employee-form/employee-form.component';
 import { PetListComponent } from './pages/pets/pet-list/pet-list.component';
 import { PetFormComponent } from './pages/pets/pet-form/pet-form.component';
+import { CalendarPageComponent } from './pages/calendar-page/calendar-page.component';
+
 
 export const routes: Routes = [
   // Redirige raíz a login
@@ -36,6 +38,7 @@ export const routes: Routes = [
       { path: 'employees/new', component: EmployeeFormComponent },
       { path: 'pets', component: PetListComponent },
       { path: 'pets/new', component: PetFormComponent },
+      { path: 'calendar', component: CalendarPageComponent },
     ],
   },
 
