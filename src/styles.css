@@ -1,22 +1,20 @@
 @import "tailwindcss";
-@plugin "daisyui";
+
+body {
+  background-color: #f5f5f5;
+}
 
 :root {
-/* Colores corporativos */
---color-primario: #1976d2; /* Azul profesional */
---color-exito:
-#43a047; /* Verde saludable */
---color-fondo:
-#f5f5f5; /* Gris neutro */
---color-blanco:
-#ffffff; /* Blanco puro */
---color-texto:
-#263238;
-/* Gris texto oscuro */
---color-error:
-#e57373; /* Rojo suave */
-/* Extras útiles */
---color-primario-hover: #1565c0; /* Azul más oscuro para hover */
---color-disabled:
-#b0bec5; /* Gris para inputs/botones desactivados */
+  /* Colores corporativos */
+  --color-primario: #1976d2; /* Azul profesional */
+  --color-exito: #43a047; /* Verde saludable */
+  --color-fondo: #f5f5f5; /* Gris neutro */
+  --color-blanco: #ffffff; /* Blanco puro */
+  --color-texto: #263238; /* Gris texto oscuro */
+  --color-error: #e57373; /* Rojo suave */
+
+  /* Extras útiles */
+  --color-primario-hover: #1565c0; /* Azul más oscuro para hover */
+  --color-disabled: #b0bec5; /* Gris para inputs/botones desactivados */
 }
+

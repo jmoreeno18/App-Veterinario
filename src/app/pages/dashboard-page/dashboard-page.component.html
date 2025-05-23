@@ -1,4 +1,4 @@
-<body class="bg-[var(--color-fondo)] font-sans leading-normal text-gray-800">
+<div class="bg-[var(--color-fondo)] font-sans leading-normal text-gray-800">
   <!-- Overlay para móviles cuando el menú está abierto -->
   <div *ngIf="sidebarOpen" class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden" 
        (click)="toggleSidebar()" aria-hidden="true"></div>
@@ -47,6 +47,9 @@
           <app-nav-cards></app-nav-cards>
         </div>
 
+        <router-outlet></router-outlet>
+
+
         <!-- Resumen de citas -->
         <app-summary></app-summary>
     
@@ -58,4 +61,4 @@
       </main>
     </div>
   </div>
-</body>
+</div>

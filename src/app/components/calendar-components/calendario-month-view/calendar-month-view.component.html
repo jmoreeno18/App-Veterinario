@@ -1,0 +1,54 @@
+<div class="p-4 max-w-screen-xl mx-auto">
+  <!-- Calendar Header -->
+  <div class="flex items-center justify-between mb-6">
+    <div class="flex items-center gap-2">
+      <button class="text-[#1976D2] hover:text-[#135ea8] font-bold" (click)="goToPreviousMonth()">
+        &#8592;
+      </button>
+      <h2 class="text-lg font-bold text-[#1976D2]">
+        {{ currentMonthName }} {{ currentYear }}
+      </h2>
+      <button class="text-[#1976D2] hover:text-[#135ea8] font-bold" (click)="goToNextMonth()">
+        &#8594;
+      </button>
+    </div>
+  </div>
+
+  <!-- Weekday headers -->
+  <div class="grid grid-cols-7 text-center text-[#263238] font-semibold mb-4">
+    <div>LUNES</div>
+    <div>MARTES</div>
+    <div>MIÉRCOLES</div>
+    <div>JUEVES</div>
+    <div>VIERNES</div>
+    <div>SÁBADO</div>
+    <div>DOMINGO</div>
+  </div>
+
+  <!-- Calendar days -->
+  <div class="grid grid-cols-7 gap-2 bg-transparent rounded-xl overflow-visible text-sm">
+    <div *ngFor="let day of calendarDays" (click)="onDayClick(day)"
+      class="bg-white p-2 h-28 rounded-lg shadow-sm flex flex-col justify-start items-start cursor-pointer relative transition hover:shadow-md hover:ring-1 hover:ring-[#1976D2]/50"
+      [ngClass]="{
+        'text-gray-400 pointer-events-none': !day.inCurrentMonth
+      }">
+
+      <!-- Día número con barra azul si es hoy -->
+      <div class="w-full flex justify-between items-center mb-1">
+        <span class="font-semibold text-xs">{{ day.day }}</span>
+        <div *ngIf="day.date.toDateString() === today.toDateString()"
+             class="h-1 w-full absolute top-0 left-0 bg-[#1976D2] rounded-t-lg"></div>
+      </div>
+
+      <div *ngIf="appointmentsByDay[day.date.toDateString()] as citas" class="w-full space-y-0.5">
+        <div *ngFor="let cita of citas.slice(0, 2)" class="text-[11px] text-[#263238] truncate flex items-center gap-1">
+          🐾 {{ cita.mascota.nombre }} · {{ cita.hora }}
+        </div>
+        <div *ngIf="citas.length > 2" class="text-[11px] text-[#1976D2] font-semibold">
+          +{{ citas.length - 2 }} más
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
