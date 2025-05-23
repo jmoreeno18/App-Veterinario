@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@plugin "daisyui";
 
 :root {
   /* Colores corporativos */
@@ -13,4 +12,8 @@
   /* Extras útiles */
   --color-primario-hover: #1565c0; /* Azul más oscuro para hover */
   --color-disabled: #b0bec5; /* Gris para inputs/botones desactivados */
+}
+
+body {
+  background-color: #f5f5f5;
 }
