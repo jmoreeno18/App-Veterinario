@@ -1,0 +1,19 @@
+<div class="bg-white rounded-lg shadow-sm mb-6">
+            <div class="p-4 border-b border-gray-200">
+              <h2 id="quick-access-title" class="text-lg font-bold text-gray-800">Acceso Rápido a Historiales</h2>
+              <p class="text-sm text-gray-600">Últimos pacientes atendidos</p>
+            </div>
+            <div class="p-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+              <a *ngFor="let patient of recentPatients" 
+                 class="bg-gray-50 hover:bg-gray-100 p-3 rounded-lg flex flex-col items-center text-center">
+                <div class="w-12 h-12 rounded-full flex items-center justify-center mb-2"
+                     [ngClass]="{'bg-blue-100': patient.type === 'dog', 'bg-orange-100': patient.type === 'cat', 'bg-purple-100': patient.type === 'other'}">
+                  <i [ngClass]="{'fas fa-dog text-blue-500': patient.type === 'dog', 
+                                'fas fa-cat text-orange-500': patient.type === 'cat',
+                                'fas fa-paw text-purple-500': patient.type === 'other'}"></i>
+                </div>
+                <h4 class="font-medium text-gray-800 text-sm">{{patient.name}}</h4>
+                <p class="text-xs text-gray-600">{{patient.breed}}</p>
+              </a>
+            </div>
+          </div>
