@@ -1,5 +1,8 @@
 @import "tailwindcss";
-@plugin "daisyui";
+
+body {
+  background-color: #F5F5F5;
+}
 
 :root {
   /* Colores corporativos */

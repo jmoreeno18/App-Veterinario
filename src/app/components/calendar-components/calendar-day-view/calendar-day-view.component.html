@@ -1,0 +1,208 @@
+<div class="p-4">
+  <!-- Encabezados alineados -->
+  <div class="flex justify-between items-center gap-4 mb-4 px-4 max-w-screen-xl mx-auto">
+    <!-- Citas para el día -->
+    <div class="bg-[#E3F2FD] text-[#1976D2] px-4 py-2 rounded-lg shadow w-full flex items-center">
+      <span class="text-base font-bold">
+        Citas para el {{ fechaSeleccionada | date: 'fullDate' }}
+      </span>
+    </div>
+
+    <!-- Total de citas -->
+    <div class="bg-[#E3F2FD] text-[#1976D2] px-4 py-2 rounded-lg shadow w-full flex justify-end items-center">
+      <span class="text-base font-bold">
+        Total: {{ citas.length }} cita{{ citas.length === 1 ? '' : 's' }}
+      </span>
+    </div>
+  </div>
+
+  <ng-container *ngIf="citas.length > 0; else sinCitas">
+    <div class="hidden md:flex justify-between text-[#263238] font-semibold px-4 text-sm mb-2">
+      <div class="w-16 text-center">Hora</div>
+      <div class="w-40">Mascota</div>
+      <div class="w-44">Cliente</div>
+      <div class="w-28">Motivo</div>
+      <div class="w-24">Notas</div>
+      <div class="w-32">Veterinario</div>
+      <div class="w-28">Estado</div>
+      <div class="w-20 ">Acciones</div>
+    </div>
+
+    <!-- Contenedor de citas -->
+    <div class="space-y-4 px-4">
+      <div *ngFor="let cita of citas"
+        class="flex flex-col sm:flex-row justify-between bg-white rounded-lg shadow p-4 gap-4 text-left">
+
+        <!-- Hora -->
+        <div class="flex flex-col w-full sm:w-16">
+          <span class="text-xs text-[#9E9E9E] sm:hidden">Hora:</span>
+          <span class="text-sm font-semibold text-[#263238]">{{ cita.hora }}</span>
+        </div>
+
+        <!-- Mascota -->
+        <div class="flex flex-col w-full sm:w-40">
+          <span class="text-xs text-[#9E9E9E] sm:hidden">Mascota:</span>
+          <div class="flex items-center gap-2">
+            <img [src]="'assets/icons/' + cita.mascota.especie.toLowerCase() + '.svg'" class="w-9 h-9" />
+            <span class="text-sm font-medium text-[#263238]">{{ cita.mascota.nombre }}</span>
+          </div>
+        </div>
+
+        <!-- Cliente -->
+        <div class="flex flex-col w-full sm:w-44">
+          <span class="text-xs text-[#9E9E9E] sm:hidden">Cliente:</span>
+          <span class="text-sm text-[#263238]">{{ cita.cliente.nombre }} {{ cita.cliente.apellidos }}</span>
+        </div>
+
+        <!-- Motivo -->
+        <div class="flex flex-col w-full sm:w-28">
+          <span class="text-xs text-[#9E9E9E] sm:hidden">Motivo:</span>
+          <span class="text-sm text-[#263238]">{{ cita.motivo }}</span>
+        </div>
+
+        <!-- Nota -->
+        <div class="flex flex-col w-full sm:w-24 items-start">
+          <span class="text-xs text-[#9E9E9E] sm:hidden">Nota:</span>
+          <button (click)="verNota(cita.notas_previsita)"
+            class="p-1.5 border border-[#1976D2] text-[#1976D2] hover:bg-[#1976D2] hover:text-white rounded-md shadow-sm transition cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="w-5 h-5">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Veterinario -->
+        <div class="flex flex-col w-full sm:w-32">
+          <span class="text-xs text-[#9E9E9E] sm:hidden">Veterinario:</span>
+          <span class="text-sm text-[#263238]">{{ cita.trabajador?.nombre || '—' }}</span>
+        </div>
+
+        <!-- Estado -->
+        <div class="flex flex-col w-full sm:w-28">
+          <span class="text-xs text-[#9E9E9E] sm:hidden">Estado:</span>
+          <span
+            class="text-xs font-semibold px-3 py-1 rounded-full inline-flex self-start sm:self-auto justify-center items-center"
+            [ngClass]="{
+            'bg-[#E3F2FD] text-[#1976D2]': cita.estado === 'pendiente',
+            'bg-[#E8F5E9] text-[#43A047]': cita.estado === 'confirmada',
+            'bg-gray-200 text-gray-800': cita.estado === 'realizada',
+            'bg-[#FFEBEE] text-[#E57373]': cita.estado === 'anulada'
+          }">{{ cita.estado }}</span>
+        </div>
+
+        <!-- Editar -->
+        <div class="flex flex-col w-full sm:w-20 items-start sm:items-center">
+
+          <span class="text-xs text-[#9E9E9E] sm:hidden">Editar:</span>
+          <button (click)="abrirModal(cita)"
+            class="p-1.5 border border-[#1976D2] text-[#1976D2] hover:bg-[#1976D2] hover:text-white rounded-md shadow-sm transition cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="w-5 h-5">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+            </svg>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #sinCitas>
+    <div
+      class="bg-white text-[#263238] rounded-lg p-6 shadow text-center flex flex-col items-center justify-center gap-3">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+        class="w-10 h-10 text-[#1976D2]">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+      </svg>
+      <p class="text-lg font-semibold">No tienes citas para hoy.</p>
+      <p class="text-sm text-[#263238]/70">Añade nuevas citas desde el panel correspondiente.</p>
+    </div>
+  </ng-template>
+</div>
+
+
+<!-- Modal editar -->
+<div *ngIf="modalAbierto" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex justify-center items-center">
+  <div class="bg-[#FFFFFF] rounded-lg shadow-lg w-full max-w-md p-6">
+    <h2 class="text-lg font-bold mb-4 text-[#1976D2]">Editar Cita</h2>
+
+    <!-- Hora -->
+    <div class="mb-4">
+      <label class="block text-sm font-medium text-[#263238]">Hora</label>
+      <input type="time" [(ngModel)]="selectedCita.hora" class="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 text-sm
+       focus:outline-none focus:border-[#1976D2] focus:ring-1 focus:ring-[#1976D2]
+       hover:border-[#1976D2] transition cursor-pointer" />
+    </div>
+
+    <!-- Motivo -->
+    <div class="mb-4 relative">
+      <label class="block text-sm font-medium text-[#263238] mb-1">Motivo</label>
+
+      <select [(ngModel)]="selectedCita.motivo" class="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 text-sm
+       focus:outline-none focus:border-[#1976D2] focus:ring-1 focus:ring-[#1976D2]
+       hover:border-[#1976D2] transition cursor-pointer">
+        <option disabled value="">Selecciona un motivo</option>
+        <option value="Sin especificar">Sin especificar</option>
+        <option value="Consulta">Consulta</option>
+        <option value="Vacunación">Vacunación</option>
+        <option value="Cirugía">Cirugía</option>
+        <option value="Análisis">Análisis</option>
+        <option value="Urgencia">Urgencia</option>
+        <option value="Ecografía">Ecografía</option>
+        <option value="Resonancia">Resonancia</option>
+        <option value="Radiografía">Radiografía</option>
+      </select>
+    </div>
+    <!-- Estado -->
+    <div class="mb-4">
+      <label class="block text-sm font-medium text-[#263238]">Estado</label>
+      <select [(ngModel)]="selectedCita.estado" class="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 text-sm
+       focus:outline-none focus:border-[#1976D2] focus:ring-1 focus:ring-[#1976D2]
+       hover:border-[#1976D2] transition cursor-pointer">
+        <option value="pendiente">Pendiente</option>
+        <option value="confirmada">Confirmada</option>
+        <option value="realizada">Realizada</option>
+        <option value="anulada">Anulada</option>
+      </select>
+    </div>
+
+    <!-- Notas -->
+    <div class="mb-4">
+      <label class="block text-sm font-medium text-[#263238]">Notas</label>
+      <textarea [(ngModel)]="selectedCita.notas" rows="3" class="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 text-sm
+       focus:outline-none focus:border-[#1976D2] focus:ring-1 focus:ring-[#1976D2]
+       hover:border-[#1976D2] transition"></textarea>
+    </div>
+
+    <!-- Botones -->
+    <div class="flex justify-end gap-2">
+      <button
+        class="px-4 py-1 text-sm font-medium text-[#263238] bg-[#F5F5F5] hover:bg-gray-300 rounded-full transition shadow-sm cursor-pointer"
+        (click)="modalAbierto = false">
+        Cancelar
+      </button>
+
+      <button
+        class="px-4 py-1 text-sm font-medium text-white bg-[#1976D2] hover:bg-[#1565C0] rounded-full transition shadow-sm cursor-pointer"
+        (click)="guardarCita()">
+        Guardar
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal notas -->
+<div *ngIf="notaVisible" class="fixed inset-0 bg-black/40 z-50 flex items-center justify-center">
+  <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
+    <h2 class="text-lg font-bold text-[#1976D2] mb-4">Nota de pre-visita</h2>
+    <p class="text-sm text-[#263238] whitespace-pre-line">{{ notaSeleccionada }}</p>
+    <div class="mt-6 text-right">
+      <button
+        class="px-4 py-1 text-sm font-medium text-white bg-[#1976D2] hover:bg-[#135ea8] rounded-full cursor-pointer"
+        (click)="notaVisible = false">Cerrar</button>
+    </div>
+  </div>
+</div>
