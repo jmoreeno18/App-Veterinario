@@ -1,8 +1,8 @@
-import { Routes } from '@angular/router';
+import { RouterModule,Routes } from '@angular/router';
+import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
 import { ClientFormComponent } from './pages/clients/client-form/client-form.component';
 import { ClientListComponent } from './pages/clients/client-list/client-list.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
-import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
 import { EmployeeListComponent } from './pages/employees/employee-list/employee-list.component';
 import { EmployeeFormComponent } from './pages/employees/employee-form/employee-form.component';
 import { PetListComponent } from './pages/pets/pet-list/pet-list.component';
@@ -48,3 +48,5 @@ export const routes: Routes = [
     redirectTo: 'dashboard',
   },
 ];
+
+

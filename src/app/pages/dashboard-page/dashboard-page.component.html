@@ -1,2 +1,64 @@
-<p>Dashboard works!</p>
-<router-outlet></router-outlet>
+<div class="bg-[var(--color-fondo)] font-sans leading-normal text-gray-800">
+  <!-- Overlay para móviles cuando el menú está abierto -->
+  <div *ngIf="sidebarOpen" class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden" 
+       (click)="toggleSidebar()" aria-hidden="true"></div>
+
+  <div class="flex flex-col lg:flex-row min-h-screen">
+    <!-- Contenido principal -->
+    <div class="bg-[var(--color-fondo)] flex-1 flex flex-col">
+      <!-- Header -->
+      <header class="bg-[var(--color-primario)] p-4 shadow-sm flex justify-between items-center sticky top-0 z-10">
+        <div class="flex items-center">
+          <button (click)="toggleSidebar()" class="mr-4 text-gray-600 lg:hidden" aria-label="Abrir menú">
+            <i class="fas fa-bars" aria-hidden="true"></i>
+          </button>
+          <div class="relative">
+            <i class="fas fa-search absolute left-3 top-3 text-gray-400" aria-hidden="true"></i>
+            <input type="text" placeholder="Buscar paciente o propietario..." 
+                   class=" bg-white pr-4 py-2 border border-gray-300 rounded-lg w-full md:w-80 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                   [(ngModel)]="searchQuery" (input)="onSearch()">
+          </div>
+        </div>
+        <div class="flex items-center gap-4">
+          <button class="relative" aria-label="Notificaciones" (click)="openNotifications()">
+            <i class="fas fa-bell text-gray-600"></i>
+            <span *ngIf="unreadNotifications > 0" class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-white text-xs flex items-center justify-center">
+              {{unreadNotifications}}
+            </span>
+          </button>
+          <button class="relative" aria-label="Mensajes" (click)="openMessages()">
+            <i class="fas fa-envelope text-gray-600"></i>
+            <span *ngIf="unreadMessages > 0" class="absolute -top-1 -right-1 w-4 h-4 bg-blue-500 rounded-full text-white text-xs flex items-center justify-center">
+              {{unreadMessages}}
+            </span>
+          </button>
+          <div>
+            <span class="hidden md:inline-block text-sm text-white">{{currentDate | date:'EEEE, d MMMM y'}}</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Contenido principal -->
+      <main class="flex-1 p-4 md:p-6 lg:p-8 overflow-y-auto">
+        <h1 class="text-2xl font-bold text-[var(--color-texto)] mb-6">Dashboard Veterinario</h1>
+
+        <!-- Botones grandes de navegación -->
+        <div>
+          <app-nav-cards></app-nav-cards>
+        </div>
+
+        <router-outlet></router-outlet>
+
+
+        <!-- Resumen de citas -->
+        <app-summary></app-summary>
+    
+
+        <!-- Acceso rápido a historiales -->
+        <section aria-labelledby="quick-access-title">
+          <app-quick-access></app-quick-access>
+        </section>
+      </main>
+    </div>
+  </div>
+</div>
