@@ -11,7 +11,7 @@ export class SupabaseService {
 
   constructor(
     private router: Router
-  ) {}
+  ) { }
 
   get session() {
     supabase.auth.getSession().then(({ data }) => {
@@ -27,12 +27,12 @@ export class SupabaseService {
 
   // Iniciar sesión
   async login(email: string, password: string): Promise<void> {
-    try{
+    try {
       const { data, error } =
-      await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+        await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
 
       // Si ha ocurrido cualquier error en el inicio de sesión, la cierra
       if (error || !data.user) {
@@ -41,7 +41,7 @@ export class SupabaseService {
       }
 
       // Recoge el rol del usuario en la tabla 'usuarios'
-      const {data: profileRol, error: profileError} = await supabase
+      const { data: profileRol, error: profileError } = await supabase
         .from('usuarios')
         .select('rol')
         .eq('correo', data.user.email)
@@ -69,10 +69,59 @@ export class SupabaseService {
 
   // Redirige a una ruta u otra según el rol del usuario
   redirecTo(): void {
-    if(this.userRol === 'admin') {
+    if (this.userRol === 'admin') {
       this.router.navigate(['/dashboard']);
     } else {
       this.router.navigate(['/dashboard']);
     }
   }
+
+  // Obtiene los datos necesarios para las citas
+  async getAppointments(): Promise<any[]> {
+    const { data, error } = await supabase
+      .from('citas')
+      .select(`
+      id,
+      fecha,
+      hora,
+      motivo,
+      estado,
+      notas_previsita,
+      mascotas (
+        nombre,
+        especie,
+        clientes (
+          nombre,
+          apellidos,
+          email
+        )
+      ),
+      usuarios (
+        nombre
+      )
+    `);
+
+    if (error) {
+      console.error('❌ Error fetching appointments:', error.message);
+      return [];
+    }
+
+    return data;
+  }
+
+  // Permite modificar citas desde el Modal
+  async updateAppointment(id: number, updates: Partial<any>) {
+    const { error } = await supabase
+      .from('citas')
+      .update(updates)
+      .eq('id', id);
+
+    if (error) {
+      console.error('❌ Error updating appointment:', error.message);
+      throw error;
+    }
+
+    console.log('✅ Appointment updated!');
+  }
+
 }

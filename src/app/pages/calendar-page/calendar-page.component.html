@@ -47,5 +47,5 @@
 </app-calendar-day-view>
 
 <!-- Vista mensual -->
-<app-calendar-month-view *ngIf="view === 'month'" [appointments]="citasDelDia" (daySelected)="onDaySelected($event)">
+<app-calendar-month-view *ngIf="view === 'month'" [appointments]="citas" (daySelected)="onDaySelected($event)">
 </app-calendar-month-view>
