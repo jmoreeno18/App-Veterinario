@@ -1,112 +1,36 @@
-<div
-  class="max-w-5xl mx-auto my-10 p-6 bg-[var(--color-fondo)] rounded-2xl shadow-md"
->
-  <h2
-    class="text-2xl font-semibold text-[var(--color-primario)] mb-6 flex items-center gap-2"
+<div class="max-w-6xl mx-auto my-10 p-6 bg-white rounded-2xl shadow-md">
+  <!-- Encabezado -->
+  <div
+    class="flex flex-col md:flex-row justify-end md:items-center gap-4 mb-6"
   >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="h-6 w-6 text-[var(--color-primario)]"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
+
+    <!-- Botón nuevo cliente -->
+    <button
+      routerLink="/dashboard/clients/new"
+      class="flex items-center gap-2 bg-[var(--color-primario)] hover:bg-[var(--color-primario-hover)] text-white px-4 py-2 rounded-lg font-medium transition-colors cursor-pointer"
     >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M17 20h5v-2a3 3 0 00-5.356-1.857M9 20H4v-2a3 3 0 015.356-1.857M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 0a9 9 0 11-18 0 9 9 0 0118 0z"
-      />
-    </svg>
-    Lista de Clientes
-  </h2>
-
-  <div class="overflow-x-auto rounded-lg border border-gray-200">
-    <table class="w-full text-sm text-left text-gray-700">
-      <thead class="text-xs uppercase bg-gray-50 text-gray-500">
-        <tr>
-          <th class="px-6 py-3">Nombre</th>
-          <th class="px-6 py-3">Email</th>
-          <th class="px-6 py-3">Teléfono</th>
-          <th class="px-6 py-3">Registrado</th>
-          <th class="px-6 py-3 text-right">Acciones</th>
-        </tr>
-      </thead>
-      <tbody *ngFor="let client of clients">
-        <tr class="border-b border-gray-100 hover:bg-gray-50 transition">
-          <td class="px-6 py-4 font-medium text-gray-800">
-            {{ client.nombre }} {{ client.apellidos }}
-          </td>
-          <td class="px-6 py-4">{{ client.email }}</td>
-          <td class="px-6 py-4">{{ client.telefono }}</td>
-          <td class="px-6 py-4">
-            {{ client.fechaRegistro | date : "dd/MM/yyyy" }}
-          </td>
-          <td class="px-6 py-4 text-right space-x-2">
-            <button
-              class="inline-flex items-center gap-1 text-gray-700 hover:text-black transition text-sm cursor-pointer"
-              title="Ver detalles"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm7.5 0a9.77 9.77 0 01-19 0 9.77 9.77 0 0119 0z"
-                />
-              </svg>
-              Ver
-            </button>
-            <button
-              class="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 transition text-sm cursor-pointer"
-              title="Editar cliente"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M15.232 5.232l3.536 3.536M4 13.5V19h5.5l10.036-10.036a1.5 1.5 0 00-2.122-2.122L4 13.5z"
-                />
-              </svg>
-              Editar
-            </button>
-
-            <button
-              class="inline-flex items-center gap-1 text-red-600 hover:text-red-800 transition text-sm cursor-pointer"
-              title="Eliminar cliente"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5-4h4a1 1 0 011 1v1H9V4a1 1 0 011-1z"
-                />
-              </svg>
-              Eliminar
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+      <icon-plus></icon-plus>
+      Nuevo Cliente
+    </button>
   </div>
+
+  <!-- Título -->
+  <div class="flex items-center justify-between mb-4">
+    <h2
+      class="text-2xl font-bold text-[var(--color-primario)] flex items-center gap-2"
+    >
+      <icon-user></icon-user>
+      Lista de Clientes
+    </h2>
+
+    <!-- Buscador -->
+    <input
+      type="text"
+      placeholder="Buscar por nombre o email..."
+      class="border rounded-md px-3 py-2 text-sm shadow-sm focus:ring-[var(--color-primario)] focus:border-[var(--color-primario)] w-1/5"
+    />
+  </div>
+
+  <!-- Tabla de clientes -->
+  <app-client-table [clients]="clients"></app-client-table>
 </div>

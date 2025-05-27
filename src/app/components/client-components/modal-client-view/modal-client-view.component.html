@@ -1,0 +1,87 @@
+<div
+  *ngIf="showModal"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+>
+  <div
+    class="bg-white w-full max-w-xl rounded-2xl shadow-xl p-6 relative modal-animation"
+  >
+    <!-- Cerrar -->
+    <button
+      (click)="closeModal()"
+      aria-label="Cerrar"
+      class="absolute top-3 right-3 text-gray-400 hover:text-black transition"
+    >
+      <svg
+        class="h-5 w-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M6 18L18 6M6 6l12 12"
+        />
+      </svg>
+    </button>
+
+    <!-- Header -->
+    <div class="flex items-center gap-3 mb-4 border-b pb-3">
+      <div
+        class="bg-[var(--color-primario)] text-white rounded-full w-10 h-10 flex items-center justify-center"
+      >
+        <svg
+          class="w-6 h-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 10a3 3 0 11-6 0 3 3 0 016 0zm7 2a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+      </div>
+      <h2 class="text-xl font-bold text-gray-800">Detalles del Cliente</h2>
+    </div>
+
+    <!-- Contenido -->
+    <div class="grid grid-cols-1 sm:grid-cols-1 gap-x-6 gap-y-3 text-sm">
+      <p><span class="font-bold">Nombre:</span> {{ selectedClient?.nombre }}</p>
+      <p>
+        <span class="font-bold">Apellidos:</span>
+        {{ selectedClient?.apellidos }}
+      </p>
+      <p><span class="font-bold">Email:</span> {{ selectedClient?.email }}</p>
+      <p>
+        <span class="font-bold">Teléfono:</span> {{ selectedClient?.telefono }}
+      </p>
+      <p>
+        <span class="font-bold">Dirección:</span>
+        {{ selectedClient?.direccion }}
+      </p>
+      <p><span class="font-bold">Ciudad:</span> {{ selectedClient?.ciudad }}</p>
+      <p>
+        <span class="font-bold">Provincia:</span>
+        {{ selectedClient?.provincia }}
+      </p>
+      <p>
+        <span class="font-bold">Fecha:</span>
+        {{ selectedClient?.fecha_alta | date : "dd/MM/yyyy" }}
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div class="text-right mt-6">
+      <button
+        (click)="closeModal()"
+        class="bg-[var(--color-primario)] hover:bg-[var(--color-primario-hover)] text-white px-5 py-2 rounded-md font-medium transition"
+      >
+        Cerrar
+      </button>
+    </div>
+  </div>
+</div>
