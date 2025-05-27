@@ -1,0 +1,50 @@
+<div class="max-w-6xl mx-auto my-10 p-6 bg-white rounded-2xl shadow-md">
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl font-bold text-[var(--color-primario)] flex items-center gap-2">
+      <icon-user></icon-user> Lista de Trabajadores
+    </h2>
+    <button
+      routerLink="/dashboard/employees/new"
+      class="bg-[var(--color-primario)] hover:bg-[var(--color-primario-hover)] text-white px-5 py-2 rounded-lg font-medium transition"
+    >
+      + Nuevo Trabajador
+    </button>
+  </div>
+
+  <div class="overflow-x-auto border rounded-lg">
+    <table class="w-full text-sm text-left text-gray-700">
+      <thead class="uppercase text-xs bg-gray-50 text-gray-500">
+        <tr>
+          <th class="px-6 py-3">Nombre</th>
+          <th class="px-6 py-3">Email</th>
+          <th class="px-6 py-3">Puesto</th>
+          <th class="px-6 py-3">Fecha de Alta</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let emp of employees" class="border-b hover:bg-gray-50 transition">
+          <td class="px-6 py-4 font-medium text-gray-800">
+            {{ emp.nombre }} {{ emp.apellidos }}
+          </td>
+          <td class="px-6 py-4">{{ emp.email }}</td>
+          <td class="px-6 py-4">{{ emp.puesto_trabajo }}</td>
+          <td class="px-6 py-4">{{ emp.created_at | date: "dd/MM/yyyy" }}</td>
+          <td class="px-6 py-4 text-right space-x-2 whitespace-nowrap">
+            <button
+              title="Editar"
+              class="text-blue-600 hover:text-blue-800 hover:scale-105 transition cursor-pointer w-6"
+            >
+              <icon-edit></icon-edit>
+            </button>
+            <button
+              title="Eliminar"
+              class="text-red-600 hover:text-red-800 hover:scale-105 transition cursor-pointer w-6"
+            >
+              <icon-delete></icon-delete>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

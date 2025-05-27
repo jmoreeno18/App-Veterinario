@@ -1,10 +1,17 @@
-<div class="p-4">
+<div *ngIf="successMsg"
+  class="fixed bottom-6 right-6 bg-green-100 border border-green-300 text-green-800 px-4 py-2 rounded shadow-md z-[999] flex items-center gap-2 transition-opacity duration-300">
+  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+  </svg>
+  {{ successMsg }}
+</div>
+<div class="p-4 max-w-screen-xl mx-auto">
   <!-- Encabezados alineados -->
   <div class="flex justify-between items-center gap-4 mb-4 px-4 max-w-screen-xl mx-auto">
     <!-- Citas para el día -->
     <div class="bg-[#E3F2FD] text-[#1976D2] px-4 py-2 rounded-lg shadow w-full flex items-center">
       <span class="text-base font-bold">
-        Citas para el {{ fechaSeleccionada | date: 'fullDate' }}
+        Citas para el {{ fechaTraducida }}
       </span>
     </div>
 
@@ -172,7 +179,7 @@
     <!-- Notas -->
     <div class="mb-4">
       <label class="block text-sm font-medium text-[#263238]">Notas</label>
-      <textarea [(ngModel)]="selectedCita.notas" rows="3" class="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 text-sm
+      <textarea [(ngModel)]="selectedCita.notas_previsita" rows="3" class="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 text-sm
        focus:outline-none focus:border-[#1976D2] focus:ring-1 focus:ring-[#1976D2]
        hover:border-[#1976D2] transition"></textarea>
     </div>
