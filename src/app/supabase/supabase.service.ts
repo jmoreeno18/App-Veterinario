@@ -212,4 +212,52 @@ export class SupabaseService {
 
     if (error) throw error;
   }
+
+  // Obtiene los datos necesarios para las citas
+  async getAppointments(): Promise<any[]> {
+    const { data, error } = await supabase
+      .from('citas')
+      .select(`
+      id,
+      fecha,
+      hora,
+      motivo,
+      estado,
+      notas_previsita,
+      mascotas (
+        nombre,
+        especie,
+        clientes (
+          nombre,
+          apellidos,
+          email
+        )
+      ),
+      usuarios (
+        nombre
+      )
+    `);
+
+    if (error) {
+      console.error('❌ Error fetching appointments:', error.message);
+      return [];
+    }
+
+    return data;
+  }
+
+  // Permite modificar citas desde el Modal
+  async updateAppointment(id: number, updates: Partial<any>) {
+    const { error } = await supabase
+      .from('citas')
+      .update(updates)
+      .eq('id', id);
+
+    if (error) {
+      console.error('❌ Error updating appointment:', error.message);
+      throw error;
+    }
+
+    console.log('✅ Appointment updated!');
+  }
 }

@@ -2,13 +2,13 @@
   <!-- Calendar Header -->
   <div class="flex items-center justify-between mb-6">
     <div class="flex items-center gap-2">
-      <button class="text-[#1976D2] hover:text-[#135ea8] font-bold" (click)="goToPreviousMonth()">
+      <button class="text-[#1976D2] hover:text-[#135ea8] font-bold cursor-pointer" (click)="goToPreviousMonth()">
         &#8592;
       </button>
       <h2 class="text-lg font-bold text-[#1976D2]">
         {{ currentMonthName }} {{ currentYear }}
       </h2>
-      <button class="text-[#1976D2] hover:text-[#135ea8] font-bold" (click)="goToNextMonth()">
+      <button class="text-[#1976D2] hover:text-[#135ea8] font-bold cursor-pointer" (click)="goToNextMonth()">
         &#8594;
       </button>
     </div>
@@ -25,7 +25,7 @@
     <div>DOMINGO</div>
   </div>
 
-  <!-- Calendar days -->
+  <!-- Días del calendario -->
   <div class="grid grid-cols-7 gap-2 bg-transparent rounded-xl overflow-visible text-sm">
     <div *ngFor="let day of calendarDays" (click)="onDayClick(day)"
       class="bg-white p-2 h-28 rounded-lg shadow-sm flex flex-col justify-start items-start cursor-pointer relative transition hover:shadow-md hover:ring-1 hover:ring-[#1976D2]/50"
@@ -37,18 +37,21 @@
       <div class="w-full flex justify-between items-center mb-1">
         <span class="font-semibold text-xs">{{ day.day }}</span>
         <div *ngIf="day.date.toDateString() === today.toDateString()"
-             class="h-1 w-full absolute top-0 left-0 bg-[#1976D2] rounded-t-lg"></div>
+          class="h-1 w-full absolute top-0 left-0 bg-[#1976D2] rounded-t-lg"></div>
       </div>
 
-      <div *ngIf="appointmentsByDay[day.date.toDateString()] as citas" class="w-full space-y-0.5">
-        <div *ngFor="let cita of citas.slice(0, 2)" class="text-[11px] text-[#263238] truncate flex items-center gap-1">
-          🐾 {{ cita.mascota.nombre }} · {{ cita.hora }}
-        </div>
-        <div *ngIf="citas.length > 2" class="text-[11px] text-[#1976D2] font-semibold">
-          +{{ citas.length - 2 }} más
-        </div>
+      <div class="w-full mt-1 space-y-1 text-xs font-semibold">
+        <ng-container *ngIf="appointmentsByDay[day.date.toDateString()] as citas">
+          <div *ngFor="let estado of ['pendiente','confirmada','realizada','anulada']">
+            <ng-container *ngIf="countByEstado(citas, estado) > 0">
+              <div class="flex items-center gap-1 text-gray-700">
+                <span [ngClass]="getDotColor(estado)" class="w-3 h-3 rounded-full inline-block"></span>
+                <span>{{ countByEstado(citas, estado) }} {{ estado }}</span>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
       </div>
-
     </div>
   </div>
 </div>

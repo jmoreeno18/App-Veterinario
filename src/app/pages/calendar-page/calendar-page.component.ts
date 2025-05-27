@@ -1,8 +1,8 @@
 import { CalendarDayViewComponent } from './../../components/calendar-components/calendar-day-view/calendar-day-view.component';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CalendarMonthViewComponent } from '../../components/calendar-components/calendario-month-view/calendar-month-view.component';
-import { RouterLink } from '@angular/router';
+import { SupabaseService } from '../../supabase/supabase.service';
 
 
 @Component({
@@ -12,91 +12,29 @@ import { RouterLink } from '@angular/router';
     CommonModule,
     CalendarDayViewComponent,
     CalendarMonthViewComponent,
-    RouterLink,
   ],
   templateUrl: './calendar-page.component.html'
 })
-export class CalendarPageComponent {
-  view: 'day' | 'week' | 'month' = 'day';
+export class CalendarPageComponent implements OnInit {
+  view: 'day' | 'month' = 'day';
   viewDate: Date = new Date();
+  citas: any[] = [];
 
+  constructor(private supabase: SupabaseService) { }
 
-  citasDelDia = [
-    {
-      fecha: '2025-05-22',
-      hora: '11:00',
-      motivo: 'Consulta general',
-      estado: 'pendiente',
-      notas_previsita: 'Revisión general.',
-      trabajador: {
-        nombre: 'Dr. Joaquín Vet'
-      },
-      mascota: {
-        nombre: 'Toby',
-        especie: 'perro'
-      },
-      cliente: {
-        nombre: 'Lucía',
-        apellidos: 'Martínez'
-      },
-    },
-    {
-      fecha: '2025-05-22',
-      hora: '12:00',
-      motivo: 'Consulta general',
-      estado: 'pendiente',
-      notas_previsita: 'El paciente ha presentado vómitos las últimas 24h.',
-      trabajador: {
-        nombre: 'Dra. Maria Vet'
-      },
-      mascota: {
-        nombre: 'Rob',
-        especie: 'exotico'
-      },
-      cliente: {
-        nombre: 'Lucía',
-        apellidos: 'Martínez'
-      },
-    },
-    {
-      fecha: '2025-05-22',
-      hora: '13:00',
-      motivo: 'Consulta general',
-      estado: 'pendiente',
-      notas_previsita: 'Picores repetidos en todo el cuerpo.',
-      trabajador: {
-        nombre: 'Dr. Joaquín Vet'
-      },
-      mascota: {
-        nombre: 'Garfield',
-        especie: 'gato'
-      },
-      cliente: {
-        nombre: 'Ana',
-        apellidos: 'Fuentes'
-      },
-    },
-    {
-      fecha: '2025-05-22',
-      hora: '14:00',
-      motivo: 'Consulta general',
-      estado: 'pendiente',
-      notas_previsita: 'No come nada desde hace 72h.',
-      trabajador: {
-        nombre: 'Dr. Joaquín Vet'
-      },
-      mascota: {
-        nombre: 'Vaca',
-        especie: 'ganado'
-      },
-      cliente: {
-        nombre: 'Francisco',
-        apellidos: 'Valero'
-      },
-    },
-  ];
+  async ngOnInit() {
+    const data = await this.supabase.getAppointments();
+    this.citas = this.mapAppointments(data);
+  }
 
-  cambiarVista(vista: 'day' | 'week' | 'month'): void {
+  // Vista diaria
+  get citasFiltradas() {
+    return this.citas.filter(c =>
+      new Date(c.fecha).toDateString() === this.viewDate.toDateString()
+    );
+  }
+
+  cambiarVista(vista: 'day' | 'month'): void {
     this.view = vista;
   }
 
@@ -105,10 +43,24 @@ export class CalendarPageComponent {
     this.view = 'day';
   }
 
-  get citasFiltradas() {
-  return this.citasDelDia.filter(cita =>
-    new Date(cita.fecha).toDateString() === this.viewDate.toDateString()
-  );
-}
-
+  // Adaptar estructura para los subcomponentes
+  private mapAppointments(data: any[]): any[] {
+    return data.map(c => ({
+      id: c.id,
+      fecha: c.fecha,
+      hora: c.hora,
+      motivo: c.motivo,
+      estado: c.estado,
+      notas_previsita: c.notas_previsita,
+      trabajador: { nombre: c.usuarios?.nombre || '—' },
+      mascota: {
+        nombre: c.mascotas?.nombre || '—',
+        especie: c.mascotas?.especie || '—'
+      },
+      cliente: {
+        nombre: c.mascotas?.clientes?.nombre || '—',
+        apellidos: c.mascotas?.clientes?.apellidos || ''
+      }
+    }));
+  }
 }

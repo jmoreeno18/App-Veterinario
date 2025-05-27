@@ -37,43 +37,43 @@ export class CalendarMonthViewComponent implements OnInit, OnChanges {
     }
   }
 
-generateCalendar(): void {
-  this.calendarDays = [];
-  const firstDay = new Date(this.currentYear, this.currentMonth, 1);
-  const lastDay = new Date(this.currentYear, this.currentMonth + 1, 0);
-  const startWeekday = (firstDay.getDay() + 6) % 7;
+  generateCalendar(): void {
+    this.calendarDays = [];
+    const firstDay = new Date(this.currentYear, this.currentMonth, 1);
+    const lastDay = new Date(this.currentYear, this.currentMonth + 1, 0);
+    const startWeekday = (firstDay.getDay() + 6) % 7;
 
-  const daysInPrevMonth = new Date(this.currentYear, this.currentMonth, 0).getDate();
+    const daysInPrevMonth = new Date(this.currentYear, this.currentMonth, 0).getDate();
 
-  for (let i = startWeekday - 1; i >= 0; i--) {
-    const date = new Date(this.currentYear, this.currentMonth - 1, daysInPrevMonth - i);
-    this.calendarDays.push({ day: date.getDate(), inCurrentMonth: false, date });
-  }
-
-  for (let d = 1; d <= lastDay.getDate(); d++) {
-    const date = new Date(this.currentYear, this.currentMonth, d);
-    this.calendarDays.push({ day: d, inCurrentMonth: true, date });
-  }
-
-  const totalDays = this.calendarDays.length;
-  const remainder = totalDays % 7;
-
-  if (remainder !== 0) {
-    const lastDate = this.calendarDays[totalDays - 1].date;
-    for (let i = 1; i <= 7 - remainder; i++) {
-      const nextDate = new Date(lastDate);
-      nextDate.setDate(lastDate.getDate() + i);
-      this.calendarDays.push({
-        day: nextDate.getDate(),
-        inCurrentMonth: false,
-        date: nextDate
-      });
+    for (let i = startWeekday - 1; i >= 0; i--) {
+      const date = new Date(this.currentYear, this.currentMonth - 1, daysInPrevMonth - i);
+      this.calendarDays.push({ day: date.getDate(), inCurrentMonth: false, date });
     }
-  }
 
-  this.currentMonthName = firstDay.toLocaleString('en-US', { month: 'long' }).toUpperCase();
-  this.buildAppointmentMap();
-}
+    for (let d = 1; d <= lastDay.getDate(); d++) {
+      const date = new Date(this.currentYear, this.currentMonth, d);
+      this.calendarDays.push({ day: d, inCurrentMonth: true, date });
+    }
+
+    const totalDays = this.calendarDays.length;
+    const remainder = totalDays % 7;
+
+    if (remainder !== 0) {
+      const lastDate = this.calendarDays[totalDays - 1].date;
+      for (let i = 1; i <= 7 - remainder; i++) {
+        const nextDate = new Date(lastDate);
+        nextDate.setDate(lastDate.getDate() + i);
+        this.calendarDays.push({
+          day: nextDate.getDate(),
+          inCurrentMonth: false,
+          date: nextDate
+        });
+      }
+    }
+
+    this.currentMonthName = firstDay.toLocaleString('es-Es', { month: 'long' }).toUpperCase();
+    this.buildAppointmentMap();
+  }
 
 
   goToPreviousMonth(): void {
@@ -117,6 +117,25 @@ generateCalendar(): void {
         this.appointmentsByDay[key] = [];
       }
       this.appointmentsByDay[key].push(cita);
+    }
+  }
+
+  countByEstado(citas: any[], estado: string): number {
+    return citas.filter(cita => cita.estado === estado).length;
+  }
+
+  getDotColor(estado: string): string {
+    switch (estado) {
+      case 'pendiente':
+        return 'bg-blue-200';     // azul
+      case 'confirmada':
+        return 'bg-green-200';    // verde
+      case 'realizada':
+        return 'bg-gray-200';     // gris
+      case 'anulada':
+        return 'bg-red-200';      // rojo
+      default:
+        return 'bg-gray-200';
     }
   }
 }

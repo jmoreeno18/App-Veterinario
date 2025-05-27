@@ -1,0 +1,64 @@
+<div class="overflow-x-auto border rounded-lg">
+  <table class="w-full text-sm text-left text-gray-700">
+    <thead class="uppercase text-xs bg-gray-50 text-gray-500">
+      <tr>
+        <th class="px-6 py-3">Cliente</th>
+        <th class="px-6 py-3">Email</th>
+        <th class="px-6 py-3">Teléfono</th>
+        <th class="px-6 py-3">Registrado</th>
+        <th class="px-6 py-3 text-right">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let client of clients"
+        class="border-b hover:bg-gray-50 transition"
+      >
+        <td class="px-6 py-4 flex items-center gap-3">
+          <div
+            class="w-9 h-9 rounded-full bg-[var(--color-primario)] text-white flex items-center justify-center font-semibold uppercase"
+          >
+            {{ client.nombre[0] }}
+          </div>
+          <div>
+            <div class="font-medium text-gray-900">
+              {{ client.nombre }} {{ client.apellidos }}
+            </div>
+          </div>
+        </td>
+        <td class="px-6 py-4">{{ client.email }}</td>
+        <td class="px-6 py-4">{{ client.telefono }}</td>
+        <td class="px-6 py-4">{{ client.fecha_alta | date : "dd/MM/yyyy" }}</td>
+        <td class="px-6 py-4 text-right space-x-2 whitespace-nowrap">
+          <!-- Botones acción -->
+          <button
+            (click)="openModal(client)"
+            title="Ver"
+            class="text-gray-600 hover:text-gray-800 hover:scale-105 transition cursor-pointer w-6"
+          >
+            <icon-view></icon-view>
+          </button>
+          <button
+            title="Editar"
+            class="text-blue-600 hover:text-blue-800 hover:scale-105 transition cursor-pointer w-6"
+          >
+            <icon-edit></icon-edit>
+          </button>
+          <button
+            title="Eliminar"
+            class="text-red-600 hover:text-red-800 hover:scale-105 transition cursor-pointer w-6"
+          >
+            <icon-delete></icon-delete>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal -->
+<app-modal-clent-view
+  [showModal]="showModal"
+  [selectedClient]="selectedClient"
+  (close)="closeModal()"
+></app-modal-clent-view>

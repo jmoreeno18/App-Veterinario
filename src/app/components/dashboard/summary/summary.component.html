@@ -1,0 +1,41 @@
+<div class="flex flex-wrap mb-6">
+          <div class="w-full md:w-1/3 pr-0 md:pr-2 mb-4 md:mb-0">
+            <div class="bg-white rounded-lg p-4 shadow-sm border-l-4 border-blue-500 h-full">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h3 class="text-xl font-bold text-gray-800">{{appointmentsToday}}</h3>
+                  <p class="text-gray-600">Citas Hoy</p>
+                </div>
+                <div class="bg-blue-100 p-2 rounded-lg">
+                  <i class="fas fa-calendar-day text-blue-500" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="w-full md:w-1/3 px-0 md:px-2 mb-4 md:mb-0">
+            <div class="bg-white rounded-lg p-4 shadow-sm border-l-4 border-green-500 h-full">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h3 class="text-xl font-bold text-gray-800">{{completedAppointments}}</h3>
+                  <p class="text-gray-600">Completadas</p>
+                </div>
+                <div class="bg-green-100 p-2 rounded-lg">
+                  <i class="fas fa-check-circle text-green-500" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="w-full md:w-1/3 pl-0 md:pl-2">
+            <div class="bg-white rounded-lg p-4 shadow-sm border-l-4 border-yellow-500 h-full">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h3 class="text-xl font-bold text-gray-800">{{pendingAppointments}}</h3>
+                  <p class="text-gray-600">Pendientes</p>
+                </div>
+                <div class="bg-yellow-100 p-2 rounded-lg">
+                  <i class="fas fa-clock text-yellow-500" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
