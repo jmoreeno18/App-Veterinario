@@ -127,15 +127,15 @@ export class CalendarMonthViewComponent implements OnInit, OnChanges {
   getDotColor(estado: string): string {
     switch (estado) {
       case 'pendiente':
-        return 'bg-blue-500';     // azul
+        return 'bg-blue-200';     // azul
       case 'confirmada':
-        return 'bg-green-500';    // verde
+        return 'bg-green-200';    // verde
       case 'realizada':
-        return 'bg-gray-400';     // gris
+        return 'bg-gray-200';     // gris
       case 'anulada':
-        return 'bg-red-500';      // rojo
+        return 'bg-red-200';      // rojo
       default:
-        return 'bg-gray-300';
+        return 'bg-gray-200';
     }
   }
 }

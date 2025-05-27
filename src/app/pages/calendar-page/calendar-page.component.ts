@@ -2,7 +2,6 @@ import { CalendarDayViewComponent } from './../../components/calendar-components
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CalendarMonthViewComponent } from '../../components/calendar-components/calendario-month-view/calendar-month-view.component';
-import { RouterLink } from '@angular/router';
 import { SupabaseService } from '../../supabase/supabase.service';
 
 
@@ -13,7 +12,6 @@ import { SupabaseService } from '../../supabase/supabase.service';
     CommonModule,
     CalendarDayViewComponent,
     CalendarMonthViewComponent,
-    RouterLink,
   ],
   templateUrl: './calendar-page.component.html'
 })
