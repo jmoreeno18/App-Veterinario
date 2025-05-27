@@ -1,8 +1,4 @@
 <div class="bg-[var(--color-fondo)] font-sans leading-normal text-gray-800">
-  <!-- Overlay para móviles cuando el menú está abierto -->
-  <div *ngIf="sidebarOpen" class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden" 
-       (click)="toggleSidebar()" aria-hidden="true"></div>
-
   <div class="flex flex-col lg:flex-row min-h-screen">
     <!-- Contenido principal -->
     <div class="bg-[var(--color-fondo)] flex-1 flex flex-col">
@@ -40,6 +36,8 @@
 
       <!-- Contenido principal -->
       <main class="flex-1 p-4 md:p-6 lg:p-8 overflow-y-auto">
+        <div class="avatar">
+</div>
         <h1 class="text-2xl font-bold text-[var(--color-texto)] mb-6">Dashboard Veterinario</h1>
 
         <!-- Botones grandes de navegación -->
@@ -47,6 +45,7 @@
           <app-nav-cards></app-nav-cards>
         </div>
 
+        <!-- Otras vistas -->
         <router-outlet></router-outlet>
 
 

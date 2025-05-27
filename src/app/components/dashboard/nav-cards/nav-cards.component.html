@@ -1,11 +1,11 @@
 <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-8">
-  <div routerLinkActive="bg-black"
-    class="bg-[var(--color-blanco)] hover:bg-[var(--color-primario-hover)] hover:text-[var(--color-blanco)] transition-colors text-[var(--color-primario)] p-6 rounded-lg shadow-md text-center group"
+  <!-- Tarjeta 1: Nueva Cita -->
+  <div 
+    routerLink="/dashboard/calendar"
+    routerLinkActive="bg-[var(--color-primario)] text-white"
+    class="bg-[var(--color-blanco)] hover:bg-[var(--color-primario-hover)] hover:text-[var(--color-blanco)] transition-colors text-[var(--color-primario)] p-6 rounded-lg shadow-md text-center group cursor-pointer"
   >
-    <i
-      class="fas fa-calendar-plus block mx-auto text-6xl mb-4"
-      aria-hidden="true"
-    ></i>
+    <i class="fas fa-calendar-plus block mx-auto text-6xl mb-4" aria-hidden="true"></i>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
@@ -22,21 +22,16 @@
     </svg>
     <h3 class="text-xl font-semibold mt-4">Nueva Cita</h3>
     <p class="mt-2 opacity-80">Programa una nueva cita en el calendario.</p>
-    <button
-      routerLink="/dashboard/calendar"
-      class="mt-4 inline-block hover:underline"
-    >
-      Ver calendario
-    </button>
+    <span class="mt-4 inline-block hover:underline">Ver calendario</span>
   </div>
 
+  <!-- Tarjeta 2: Nueva Mascota -->
   <div
-    class="bg-[var(--color-blanco)] hover:bg-[var(--color-primario-hover)] hover:text-[var(--color-blanco)] transition-colors text-[var(--color-primario)] p-6 rounded-lg shadow-md text-center group"
+    routerLink="/dashboard/pets/new"
+    routerLinkActive="bg-[var(--color-primario)] text-white"
+    class="bg-[var(--color-blanco)] hover:bg-[var(--color-primario-hover)] hover:text-[var(--color-blanco)] transition-colors text-[var(--color-primario)] p-6 rounded-lg shadow-md text-center group cursor-pointer"
   >
-    <i
-      class="fas fa-user-plus block mx-auto text-6xl mb-4"
-      aria-hidden="true"
-    ></i>
+    <i class="fas fa-user-plus block mx-auto text-6xl mb-4" aria-hidden="true"></i>
     <svg
       viewBox="0 0 400 400"
       fill="none"
@@ -45,11 +40,7 @@
       class="w-16 h-16 mx-auto mb-4"
     >
       <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-      <g
-        id="SVGRepo_tracerCarrier"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      ></g>
+      <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
       <g id="SVGRepo_iconCarrier">
         <path
           d="M74 211.658C99.0457 142.251 155.836 87.1314 226.717 108.765C276.177 123.861 255.428 151.992 274.648 170.486C285.492 178.829 314.933 167.631 322.548 178.047C329.28 187.259 324.416 204.065 322.548 215.097C315.179 258.597 265.313 265 223.065 265"
@@ -83,21 +74,16 @@
     </svg>
     <h3 class="text-xl font-semibold mt-4">Nueva Mascota</h3>
     <p class="mt-2 opacity-80">Registra una nueva mascota en el sistema.</p>
-    <a
-      routerLink="/dashboard/pets/new"
-      class="mt-4 inline-block hover:underline"
-    >
-      Registrar mascota
-    </a>
+    <span class="mt-4 inline-block hover:underline">Registrar mascota</span>
   </div>
 
+  <!-- Tarjeta 3: Nuevo Cliente -->
   <div
-    class="bg-[var(--color-blanco)] hover:bg-[var(--color-primario-hover)] hover:text-[var(--color-blanco)] transition-colors text-[var(--color-primario)] p-6 rounded-lg shadow-md text-center group"
+    routerLink="/dashboard/clients/new"
+    routerLinkActive="bg-[var(--color-primario)] text-white"
+    class="bg-[var(--color-blanco)] hover:bg-[var(--color-primario-hover)] hover:text-[var(--color-blanco)] transition-colors text-[var(--color-primario)] p-6 rounded-lg shadow-md text-center group cursor-pointer"
   >
-    <i
-      class="fas fa-file-medical block mx-auto text-6xl mb-4"
-      aria-hidden="true"
-    ></i>
+    <i class="fas fa-file-medical block mx-auto text-6xl mb-4" aria-hidden="true"></i>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
@@ -112,24 +98,18 @@
         d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
       />
     </svg>
-    <h3 class="text-xl font-semibold mt-4">Nuevo Cliente</h3>
-    <p class="mt-2 opacity-80">Añade un nuevo cliente al registro.</p>
-    <a
-      routerLink="dashboard/clients/new"
-      routerLinkActive="active"
-      class="mt-4 inline-block hover:underline"
-    >
-      Crear cliente
-    </a>
+    <h3 class="text-xl font-semibold mt-4">Clientes</h3>
+    <p class="mt-2 opacity-80">Listado completo de clientes.</p>
+    <span class="mt-4 inline-block hover:underline">Ver lista de clientes</span>
   </div>
 
+  <!-- Tarjeta 4: Nuevo Trabajador -->
   <div
-    class="bg-[var(--color-blanco)] hover:bg-[var(--color-primario-hover)] hover:text-[var(--color-blanco)] transition-colors text-[var(--color-primario)] p-6 rounded-lg shadow-md text-center group"
+    routerLink="/dashboard/employees/new"
+    routerLinkActive="bg-[var(--color-primario)] text-white"
+    class="bg-[var(--color-blanco)] hover:bg-[var(--color-primario-hover)] hover:text-[var(--color-blanco)] transition-colors text-[var(--color-primario)] p-6 rounded-lg shadow-md text-center group cursor-pointer"
   >
-    <i
-      class="fas fa-file-medical block mx-auto text-6xl mb-4"
-      aria-hidden="true"
-    ></i>
+    <i class="fas fa-file-medical block mx-auto text-6xl mb-4" aria-hidden="true"></i>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
@@ -144,13 +124,8 @@
         d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Zm6-10.125a1.875 1.875 0 1 1-3.75 0 1.875 1.875 0 0 1 3.75 0Zm1.294 6.336a6.721 6.721 0 0 1-3.17.789 6.721 6.721 0 0 1-3.168-.789 3.376 3.376 0 0 1 6.338 0Z"
       />
     </svg>
-    <h3 class="text-xl font-semibold mt-4">Nuevo Trabajador</h3>
-    <p class="mt-2 opacity-80">Registra un nuevo empleado en el sistema.</p>
-    <a
-      routerLink="/dashboard/employees/new"
-      class="mt-4 inline-block hover:underline"
-    >
-      Crear trabajador
-    </a>
+    <h3 class="text-xl font-semibold mt-4">Empleados</h3>
+    <p class="mt-2 opacity-80">Lista completa de empleados.</p>
+    <span class="mt-4 inline-block hover:underline">Ver lista de trabajadores</span>
   </div>
 </div>
