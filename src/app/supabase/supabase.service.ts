@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AuthSession } from '@supabase/supabase-js';
+import { AuthSession, SupabaseClient } from '@supabase/supabase-js';
 import { Router } from '@angular/router';
 import { supabase } from './config/init-supabase';
+import { from, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class SupabaseService {
@@ -75,6 +76,24 @@ export class SupabaseService {
       this.router.navigate(['/dashboard']);
     }
   }
+
+  //Obtener citas para resumen
+ getSummaryAppointments(): Observable<any> {
+    const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, '0');
+  const dd = String(today.getDate()).padStart(2, '0');
+  const todayStr = `${yyyy}-${mm}-${dd}`;
+  return from(supabase
+      .from('citas')
+      .select(`
+        id,
+        fecha,
+        hora,
+        estado
+      `).eq('fecha', todayStr)
+    );
+      }
 
   // Obtiene los datos necesarios para las citas
   async getAppointments(): Promise<any[]> {
