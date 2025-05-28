@@ -29,7 +29,7 @@
         <td class="px-6 py-4">{{ client.email }}</td>
         <td class="px-6 py-4">{{ client.telefono }}</td>
         <td class="px-6 py-4">{{ client.fecha_alta | date : "dd/MM/yyyy" }}</td>
-        <td class="px-6 py-4 text-right space-x-2 whitespace-nowrap">
+        <td class="px-6 py-4 text-right space-x-2 whitespace-nowrap flex justify-end">
           <!-- Botones acción -->
           <button
             (click)="openModal(client)"
@@ -39,12 +39,14 @@
             <icon-view></icon-view>
           </button>
           <button
+          (click)="openEditModal(client)"
             title="Editar"
             class="text-blue-600 hover:text-blue-800 hover:scale-105 transition cursor-pointer w-6"
           >
             <icon-edit></icon-edit>
           </button>
           <button
+            (click)="onDelete(client)"
             title="Eliminar"
             class="text-red-600 hover:text-red-800 hover:scale-105 transition cursor-pointer w-6"
           >
@@ -57,8 +59,17 @@
 </div>
 
 <!-- Modal -->
-<app-modal-clent-view
+<app-modal-client-view
   [showModal]="showModal"
   [selectedClient]="selectedClient"
   (close)="closeModal()"
-></app-modal-clent-view>
+></app-modal-client-view>
+
+<app-modal-client-edit
+  [showModal]="showEditModal"
+  [client]="editableClient"
+  (close)="closeEditModal()"
+  (updated)="onClientUpdated()"
+></app-modal-client-edit>
+
+

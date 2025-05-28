@@ -5,7 +5,6 @@ import { SupabaseService } from './../../../supabase/supabase.service';
 import { ClientTableComponent } from '../../../components/client-components/client-table-list/client-table.component';
 import { IconPlusComponent } from '../../../components/icons/icon-plus.component';
 import { IconUserComponent } from '../../../components/icons/icon-user.component';
-import { ModalClientViewComponent } from './../../../components/client-components/modal-client-view/modal-client-view.component';
 
 @Component({
   selector: 'app-client-list',
@@ -21,6 +20,9 @@ import { ModalClientViewComponent } from './../../../components/client-component
 })
 export class ClientListComponent implements OnInit {
   clients: any[] = [];
+
+  selectedClient: any = null;
+  showDeleteModal: boolean = false;
 
   constructor(
     private supabaseService: SupabaseService,
@@ -42,4 +44,30 @@ export class ClientListComponent implements OnInit {
       this.cdr.markForCheck();
     }
   }
+
+  openDeleteModal(client: any) {
+    this.selectedClient = client;
+    this.showDeleteModal = true;
+  }
+
+  closeDeleteModal() {
+    this.selectedClient = null;
+    this.showDeleteModal = false;
+  }
+
+  async confirmDeleteClient() {
+    const { error } = await this.supabaseService.client
+      .from('clientes')
+      .delete()
+      .eq('id', this.selectedClient.id);
+
+    if (error) {
+      console.error('❌ Error al eliminar cliente:', error.message);
+    } else {
+      this.loadClients(); // Refresca la lista
+    }
+
+    this.closeDeleteModal();
+  }
 }
+

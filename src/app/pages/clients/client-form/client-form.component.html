@@ -1,196 +1,96 @@
-<div
-  class="bg-[var(--color-blanco)] p-6 rounded-2xl shadow-md max-w-4xl mx-auto my-10"
->
+<div class="bg-white p-8 rounded-2xl shadow-lg max-w-4xl mx-auto my-10 border border-gray-100">
 
-  <!-- Título -->
-  <h2
-    class="text-2xl font-semibold text-[var(--color-primario)] mb-2 flex items-center gap-2"
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="h-6 w-6 text-[var(--color-primario)]"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M5.121 17.804A13.937 13.937 0 0112 15c2.5 0 4.847.657 6.879 1.804M15 12a3 3 0 11-6 0 3 3 0 016 0zm6 4v2a2 2 0 01-2 2H5a2 2 0 01-2-2v-2a9 9 0 0118 0z"
-      />
-    </svg>
-    Registro de Cliente
-  </h2>
-  <p class="text-sm text-gray-500 mb-6">
-    Rellena los datos del nuevo cliente. Esta información es necesaria para
-    registrar correctamente sus mascotas.
-  </p>
+  <!-- Encabezado -->
+  <div class="mb-6 flex items-center gap-4">
+    <div class="bg-[var(--color-primario)] text-white rounded-full p-3 shadow-md">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M5.121 17.804A13.937 13.937 0 0112 15c2.5 0 4.847.657
+              6.879 1.804M15 12a3 3 0 11-6 0 3 3 0 016 0zm6 4v2a2
+              2 0 01-2 2H5a2 2 0 01-2-2v-2a9 9 0 0118 0z"/>
+      </svg>
+    </div>
+    <div>
+      <h2 class="text-2xl font-bold text-[var(--color-primario)]">Registrar Nuevo Cliente</h2>
+      <p class="text-sm text-gray-500">Completa el formulario para agregar un nuevo cliente al sistema.</p>
+    </div>
+  </div>
 
   <!-- Formulario -->
-  <form class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+  <form class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+
     <div>
-      <label class="block text-[var(--color-texto)] font-medium mb-1 mr-2 ml-2"
-        >Nombre</label
-      >
-      <input
-        type="text"
-        placeholder=" Juan"
-        class="w-full px-2 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-1 focus:ring-[var(--color-primario)] placeholder:text-gray-400"
-      />
+      <label class="text-sm font-medium text-gray-700 block mb-1">Nombre</label>
+      <input [(ngModel)]="client.nombre" name="nombre" type="text" placeholder="Juan"
+             class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-[var(--color-primario)] outline-none placeholder:text-gray-400"/>
     </div>
+
     <div>
-      <label class="block text-[var(--color-texto)] font-medium mb-1 mr-2 ml-2"
-        >Apellidos</label
-      >
-      <input
-        type="text"
-        placeholder=" Pérez Gómez"
-        class="w-full px-2 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-1 focus:ring-[var(--color-primario)] placeholder:text-gray-400"
-      />
+      <label class="text-sm font-medium text-gray-700 block mb-1">Apellidos</label>
+      <input [(ngModel)]="client.apellidos" name="apellidos" type="text" placeholder="García López"
+             class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-[var(--color-primario)] outline-none placeholder:text-gray-400"/>
     </div>
+
     <div>
-      <label class="block text-[var(--color-texto)] font-medium mb-1 mr-2 ml-2"
-        >DNI</label
-      >
-      <input
-        type="text"
-        maxlength="9"
-        placeholder=" 12345678X"
-        class="w-full px-2 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-1 focus:ring-[var(--color-primario)] placeholder:text-gray-400"
-      />
+      <label class="text-sm font-medium text-gray-700 block mb-1">DNI</label>
+      <input [(ngModel)]="client.DNI" name="DNI" type="text" maxlength="9" placeholder="12345678X"
+             class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-[var(--color-primario)] outline-none placeholder:text-gray-400"/>
     </div>
+
     <div>
-      <label class="block text-[var(--color-texto)] font-medium mb-1 mr-2 ml-2"
-        >Teléfono</label
-      >
-      <input
-        type="tel"
-        placeholder=" 600123456"
-        class="w-full px-2 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-1 focus:ring-[var(--color-primario)] placeholder:text-gray-400"
-      />
+      <label class="text-sm font-medium text-gray-700 block mb-1">Teléfono</label>
+      <input [(ngModel)]="client.telefono" name="telefono" type="tel" placeholder="600123456"
+             class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-[var(--color-primario)] outline-none placeholder:text-gray-400"/>
     </div>
+
     <div class="sm:col-span-2">
-      <label class="block text-[var(--color-texto)] font-medium mb-1 mr-2 ml-2"
-        >Dirección</label
-      >
-      <input
-        type="text"
-        placeholder=" Calle Ficticia, nº 123"
-        class="w-full px-2 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-1 focus:ring-[var(--color-primario)] placeholder:text-gray-400"
-      />
+      <label class="text-sm font-medium text-gray-700 block mb-1">Dirección</label>
+      <input [(ngModel)]="client.direccion" name="direccion" type="text" placeholder="Calle Ficticia, nº 123"
+             class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-[var(--color-primario)] outline-none placeholder:text-gray-400"/>
     </div>
+
     <div>
-      <label class="block text-[var(--color-texto)] font-medium mb-1 mr-2 ml-2"
-        >Ciudad</label
-      >
-      <input
-        type="text"
-        placeholder=" Madrid"
-        class="w-full px-2 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-1 focus:ring-[var(--color-primario)] placeholder:text-gray-400"
-      />
+      <label class="text-sm font-medium text-gray-700 block mb-1">Ciudad</label>
+      <input [(ngModel)]="client.ciudad" name="ciudad" type="text" placeholder="Madrid"
+             class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-[var(--color-primario)] outline-none placeholder:text-gray-400"/>
     </div>
+
     <div>
-      <label class="block text-[var(--color-texto)] font-medium mb-1 mr-2 ml-2"
-        >Provincia</label
-      >
-      <input
-        type="text"
-        placeholder=" Madrid"
-        class="w-full px-2 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-1 focus:ring-[var(--color-primario)] placeholder:text-gray-400"
-      />
+      <label class="text-sm font-medium text-gray-700 block mb-1">Provincia</label>
+      <input [(ngModel)]="client.provincia" name="provincia" type="text" placeholder="Madrid"
+             class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-[var(--color-primario)] outline-none placeholder:text-gray-400"/>
     </div>
+
     <div class="sm:col-span-2">
-      <label class="block text-[var(--color-texto)] font-medium mb-1 mr-2 ml-2"
-        >Email</label
-      >
-      <input
-        type="email"
-        placeholder=" cliente@email.com"
-        class="w-full px-2 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-1 focus:ring-[var(--color-primario)] placeholder:text-gray-400"
-      />
+      <label class="text-sm font-medium text-gray-700 block mb-1">Email</label>
+      <input [(ngModel)]="client.email" name="email" type="email" placeholder="cliente@email.com"
+             class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-[var(--color-primario)] outline-none placeholder:text-gray-400"/>
     </div>
   </form>
 
   <!-- Botón -->
   <div class="mt-6 text-right">
-    <button
-      type="submit"
-      class="bg-[var(--color-primario)] hover:bg-[var(--color-primario-hover)] text-white px-6 py-2 rounded-lg font-semibold transition-colors cursor-pointer"
-    >
+    <button (click)="saveClient()" type="button"
+            class="bg-[var(--color-primario)] hover:bg-[var(--color-primario-hover)] text-white px-6 py-2 rounded-lg font-semibold shadow transition">
       Guardar Cliente
     </button>
   </div>
 
-  <!-- Divider -->
-  <hr class="my-10 bg-[--color-primario]" />
-
   <!-- Últimos clientes -->
-  <div>
-    <h3
-      class="text-xl font-semibold text-[var(--color-primario)] mb-4 flex items-center gap-2"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-5 w-5 text-[var(--color-primario)]"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M9 17v-2a4 4 0 014-4h1.5M9 7h.01M17 7h.01M12 7h.01M21 12c0 4.418-4.03 8-9 8s-9-3.582-9-8 4.03-8 9-8 9 3.582 9 8z"
-        />
-      </svg>
-      Últimos clientes registrados
-    </h3>
-
-    <div class="overflow-x-auto">
-      <table
-        class="w-full text-sm text-left text-gray-700 border border-gray-200 rounded-md"
-      >
-        <thead class="text-xs uppercase bg-gray-100 text-gray-500">
-          <tr>
-            <th class="px-4 py-2">Nombre</th>
-            <th class="px-4 py-2">Teléfono</th>
-            <th class="px-4 py-2">Fecha</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="border-b border-gray-200">
-            <td class="px-4 py-2">Laura Pérez</td>
-            <td class="px-4 py-2">612345678</td>
-            <td class="px-4 py-2">21/05/2025</td>
-          </tr>
-          <tr class="border-b border-gray-200">
-            <td class="px-4 py-2">Mario Ruiz</td>
-            <td class="px-4 py-2">699887766</td>
-            <td class="px-4 py-2">20/05/2025</td>
-          </tr>
-          <tr class="border-b border-gray-200">
-            <td class="px-4 py-2">Ana Torres</td>
-            <td class="px-4 py-2">634556677</td>
-            <td class="px-4 py-2">19/05/2025</td>
-          </tr>
-          <tr class="border-b border-gray-200">
-            <td class="px-4 py-2">Carlos González</td>
-            <td class="px-4 py-2">634556677</td>
-            <td class="px-4 py-2">18/05/2025</td>
-          </tr>
-        </tbody>
-      </table>
+  <div *ngIf="lastClients.length > 0" class="mt-10">
+    <h3 class="text-lg font-semibold text-[var(--color-primario)] mb-4">Últimos Clientes Registrados</h3>
+    <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <div *ngFor="let client of lastClients" class="bg-[var(--color-fondo)] p-4 rounded-xl shadow border border-gray-200">
+        <h4 class="font-semibold text-gray-800">{{ client.nombre }} {{client.apellidos}}</h4>
+        <p class="text-sm text-gray-600">{{ client.DNI }}</p>
+        <p class="text-xs text-gray-400">{{ client.fecha_alta | date: 'dd/MM/yyyy' }}</p>
+      </div>
     </div>
-
-    <!-- Botón Ver Todos -->
-    <div class="mt-4 text-right">
-      <a
-        routerLink="/dashboard/clients"
-        class="inline-block text-sm font-medium text-white bg-[var(--color-primario)] hover:bg-[var(--color-primario-hover)] px-4 py-2 rounded-lg transition-colors cursor-pointer"
-      >
-        Ver todos los clientes
-      </a>
-    </div>
+  </div>
+  <div class="mt-6 text-right">
+    <button routerLink = "/dashboard/clients" type="button"
+            class="bg-[var(--color-primario)] hover:bg-[var(--color-primario-hover)] text-white px-6 py-2 rounded-lg font-semibold shadow transition">
+      Ver todos los clientes
+    </button>
   </div>
 </div>
