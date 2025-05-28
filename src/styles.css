@@ -1,21 +1,85 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+/* Color de fondo para todas las rutas de la aplicación */
 body {
   background-color: #f5f5f5;
 }
 
+/* Elimina el subrayado por defecto de los enlaces */
+a {
+  text-decoration: none;
+}
+
+/* Establece el cursor en forma de puntero para todos los botones */
+button {
+  cursor: pointer;
+}
+
 :root {
   /* Colores corporativos */
-  --color-primario: #1976d2; /* Azul profesional */
-  --color-exito: #43a047; /* Verde saludable */
-  --color-fondo: #f5f5f5; /* Gris neutro */
-  --color-blanco: #ffffff; /* Blanco puro */
-  --color-texto: #263238; /* Gris texto oscuro */
-  --color-error: #e57373; /* Rojo suave */
+  --color-primario: #1976d2; /* Azul profesional para botones y encabezados*/
+  --color-exito: #43a047; /* Verde saludable para validaciones, citas activas, mensajes de éxito*/
+  --color-fondo: #f5f5f5; /* Gris neutro para fondos*/
+  --color-blanco: #ffffff; /* Blanco puro para formularios o tarjetas*/
+  --color-texto: #263238; /* Gris texto oscuro para texto*/
+  --color-error: #e57373; /* Rojo suave para errores en la interfaz, citas canceladas o alertas*/
 
   /* Extras útiles */
   --color-primario-hover: #1565c0; /* Azul más oscuro para hover */
   --color-disabled: #b0bec5; /* Gris para inputs/botones desactivados */
 }
 
+/* Elimina el fondo azul por defecto del autocompletado de los inputs para navegadores basados en WebKit/Blink. No aplica para Firefox */
+input:-webkit-autofill {
+  box-shadow: 0 0 0px 1000px var(--color-blanco) inset !important;
+  -webkit-text-fill-color: var(--color-texto) !important;
+}
+
+/* Estilos reutilizables para botones que pasan de deshabilitados a habilitados */
+.btn-enabled {
+  background-color: var(--color-primario);
+  color: var(--color-blanco);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Estilos reutilizables de hover para botones deshabilitados */
+.btn-enabled:hover {
+  background-color: var(--color-primario-hover);
+}
+
+/* Estilos reutilizables para botones deshabilitados */
+.btn-disabled {
+  background-color: var(--color-disabled);
+  color: var(--color-texto);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Enlace para recuperar contraseña del formulario de login */
+.link-recuperar {
+  color: var(--color-primario);
+  transition: color 0.2s ease;
+  text-decoration: underline;
+}
+
+/* Hover para el enlace para recuperar contraseña del formulario de login  */
+.link-recuperar:hover {
+  color: var(--color-primario-hover);
+  cursor: pointer;
+}
+
+/* Estilos reutilizables para mensajes de éxito en formularios */
+.success-message {
+  background-color: rgba(67, 160, 71, 0.1);
+  border-left: 4px solid var(--color-exito);
+  color: var(--color-exito);
+}
+
+/* Estilos reutilizables para mensajes de error en formularios */
+.alert-error {
+  background-color: rgba(229, 115, 115, 0.1);
+  border-left: 4px solid var(--color-error);
+  color: var(--color-error);
+}

@@ -1,9 +1,8 @@
-import { CalendarDayViewComponent } from './../../components/calendar-components/calendar-day-view/calendar-day-view.component';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CalendarDayViewComponent } from '../../components/calendar-components/calendar-day-view/calendar-day-view.component';
 import { CalendarMonthViewComponent } from '../../components/calendar-components/calendario-month-view/calendar-month-view.component';
 import { SupabaseService } from '../../supabase/supabase.service';
-
 
 @Component({
   selector: 'app-calendar-page',
@@ -20,14 +19,17 @@ export class CalendarPageComponent implements OnInit {
   viewDate: Date = new Date();
   citas: any[] = [];
 
-  constructor(private supabase: SupabaseService) { }
+  constructor(private supabase: SupabaseService) {}
 
   async ngOnInit() {
-    const data = await this.supabase.getAppointments();
+    await this.refreshAppointments();
+  }
+
+  async refreshAppointments() {
+    const data = await this.supabase.getAppointments(); // trae todas las citas
     this.citas = this.mapAppointments(data);
   }
 
-  // Vista diaria
   get citasFiltradas() {
     return this.citas.filter(c =>
       new Date(c.fecha).toDateString() === this.viewDate.toDateString()
@@ -43,7 +45,6 @@ export class CalendarPageComponent implements OnInit {
     this.view = 'day';
   }
 
-  // Adaptar estructura para los subcomponentes
   private mapAppointments(data: any[]): any[] {
     return data.map(c => ({
       id: c.id,
