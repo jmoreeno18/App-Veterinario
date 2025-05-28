@@ -1,0 +1,237 @@
+<div
+  class="min-h-screen flex flex-col items-center justify-start bg-base-100 px-6 pt-10"
+>
+  <!-- Logo y Título -->
+  <div class="flex flex-col items-center mb-10">
+    <a [routerLink]="['/login']" class="group">
+      <div
+        class="w-36 h-36 rounded-full shadow-md overflow-hidden relative bg-white cursor-pointer group-hover:shadow-xl transition-shadow duration-300"
+      >
+        <img
+          src="assets/images/logo-mockvet.png"
+          alt="Logo MockVet"
+          class="absolute top-0 left-0 w-full h-full object-cover translate-x-1"
+        />
+      </div>
+    </a>
+    <h1
+      class="text-3xl font-bold mt-6 text-center"
+      style="color: var(--color-primario)"
+    >
+      Accede a la plataforma
+    </h1>
+  </div>
+
+  <!-- Formulario -->
+  <form
+    [formGroup]="loginForm"
+    (ngSubmit)="onSubmit()"
+    class="w-full max-w-xl p-8 rounded-lg shadow-md mt-25"
+    style="background-color: var(--color-blanco)"
+  >
+    <h2
+      class="text-center text-3xl font-bold mb-6 text-primary"
+      style="color: var(--color-primario)"
+    >
+      Iniciar sesión
+    </h2>
+
+    <!-- Email -->
+    <label
+      class="label font-bold block"
+      style="color: var(--color-texto)"
+      for="email"
+      >Email *</label
+    >
+    <input
+      id="email"
+      type="email"
+      formControlName="email"
+      (focus)="emailFocused = true"
+      (blur)="emailFocused = false"
+      [style.borderColor]="
+        (loginForm.get('email')?.touched || loginForm.get('email')?.dirty) &&
+        loginForm.get('email')?.invalid
+          ? 'var(--color-error)'
+          : loginForm.get('email')?.valid
+          ? 'var(--color-exito)'
+          : emailFocused
+          ? 'var(--color-primario-hover)'
+          : 'var(--color-disabled)'
+      "
+      class="w-full rounded-xl bg-white border p-3 placeholder-gray-400 focus:outline-none focus:shadow-md transition-all duration-200 mb-3 mt-3"
+      placeholder="ejemplo@ejemplo.com"
+      autocomplete="email"
+    />
+
+    <!-- Mensajes de error del input del email -->
+    <div
+      *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid"
+      class="text-error text-sm mb-4"
+      style="color: var(--color-error)"
+    >
+      <span *ngIf="loginForm.get('email')?.errors?.['required']">
+        El email es obligatorio
+      </span>
+      <span *ngIf="loginForm.get('email')?.errors?.['email']">
+        Email inválido
+      </span>
+    </div>
+
+    <!-- Contraseña -->
+    <label
+      class="label font-bold block mt-4"
+      style="color: var(--color-texto)"
+      for="password"
+    >
+      Contraseña *
+    </label>
+
+    <div class="relative">
+      <input
+        id="password"
+        [type]="showPassword ? 'text' : 'password'"
+        formControlName="password"
+        (focus)="passwordFocused = true"
+        (blur)="passwordFocused = false"
+        [style.borderColor]="
+          (loginForm.get('password')?.touched ||
+            loginForm.get('password')?.dirty) &&
+          loginForm.get('password')?.invalid
+            ? 'var(--color-error)'
+            : loginForm.get('password')?.valid
+            ? 'var(--color-exito)'
+            : passwordFocused
+            ? 'var(--color-primario-hover)'
+            : 'var(--color-disabled)'
+        "
+        class="w-full rounded-xl bg-white border p-3 pr-10 placeholder-gray-400 focus:outline-none focus:shadow-md transition-all duration-200 mb-3 mt-3"
+        placeholder="********"
+        autocomplete="current-password"
+      />
+
+      <!-- Botón mostrar/ocultar contraseña -->
+      <button
+        type="button"
+        (click)="togglePassword()"
+        class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+        aria-label="Mostrar u ocultar contraseña"
+        tabindex="-1"
+      >
+        <!-- Mostrar contraseña -->
+        <svg
+          *ngIf="!showPassword"
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+          />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+          />
+        </svg>
+
+        <!-- Ocultar contraseña -->
+        <svg
+          *ngIf="showPassword"
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88"
+          />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mensajes de error del input de la contraseña -->
+    <div
+      *ngIf="
+        loginForm.get('password')?.touched && loginForm.get('password')?.invalid
+      "
+      class="text-error text-sm mb-4"
+      style="color: var(--color-error)"
+    >
+      <span *ngIf="loginForm.get('password')?.errors?.['required']">
+        La contraseña es obligatoria
+      </span>
+      <span *ngIf="loginForm.get('password')?.errors?.['minlength']">
+        Mínimo 6 caracteres
+      </span>
+    </div>
+
+    <!-- Enlace para reestablecer la contraseña -->
+    <div class="text-right">
+      <a
+        class="link-recuperar text-sm mb-8 mt-0 text-primary hover:underline cursor-pointer inline-block"
+        (click)="onForgotPassword()"
+        >¿Has olvidado la contraseña?</a
+      >
+    </div>
+
+    <!-- Botón para enviar el formulario -->
+    <button
+      type="submit"
+      [disabled]="loginForm.invalid || isLoading"
+      [ngClass]="{
+        'btn-disabled': loginForm.invalid || isLoading,
+        'btn-enabled': !(loginForm.invalid || isLoading)
+      }"
+      class="w-full max-w-[500px] min-w-[250px] py-2 px-6 text-sm font-medium rounded-2xl transition duration-200 flex items-center justify-center gap-2 mx-auto"
+    >
+      <svg
+        *ngIf="isLoading"
+        class="w-5 h-5 animate-spin"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <circle
+          class="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          stroke-width="4"
+        ></circle>
+        <path
+          class="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+        ></path>
+      </svg>
+      {{ isLoading ? "Cargando..." : "Enviar" }}
+    </button>
+
+    <!-- Mensaje de éxito específico en el formulario. Se maneja el mensaje personalizado desde cada método -->
+    <div
+      *ngIf="successMsg"
+      class="success-message border-l-4 mt-4 p-4 rounded-xl mb-4"
+    >
+      ✅ {{ successMsg }}
+    </div>
+
+    <!-- Mensaje de error específica en el formulario. Se maneja el mensaje personalizado desde cada método -->
+    <div
+      *ngIf="errorMsg"
+      class="alert-error border-l-4 mt-4 p-4 rounded-xl mb-4"
+    >
+      ❌ {{ errorMsg }}
+    </div>
+  </form>
+</div>
