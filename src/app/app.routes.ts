@@ -8,7 +8,7 @@ import { EmployeeFormComponent } from './pages/employees/employee-form/employee-
 import { PetListComponent } from './pages/pets/pet-list/pet-list.component';
 import { PetFormComponent } from './pages/pets/pet-form/pet-form.component';
 import { CalendarPageComponent } from './pages/calendar-page/calendar-page.component';
-
+import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-password-page.component';
 
 export const routes: Routes = [
   // Redirige raíz a login
@@ -23,6 +23,12 @@ export const routes: Routes = [
     path: 'login',
     component: LoginPageComponent,
     // canActivate: [LoginGuard],
+  },
+
+  // Página para reestablecer la contraseña
+  {
+    path: 'reset-password',
+    component: ResetPasswordPageComponent
   },
 
   // Dashboard y sus rutas hijas
