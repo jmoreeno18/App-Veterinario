@@ -1,0 +1,127 @@
+<div
+  *ngIf="showModal"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+>
+  <div
+    class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl p-8 relative animate-fade-in border border-gray-100"
+  >
+    <!-- Botón cerrar -->
+    <button
+      (click)="closeModal()"
+      aria-label="Cerrar"
+      class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 transition"
+    >
+      <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M6 18L18 6M6 6l12 12"
+        />
+      </svg>
+    </button>
+
+    <!-- Encabezado -->
+    <div class="mb-6 flex items-center gap-4 border-b pb-4">
+      <div class="bg-[var(--color-primario)] text-white w-12 h-12 rounded-full flex items-center justify-center shadow-md">
+        <svg
+          class="w-6 h-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M15 10a3 3 0 11-6 0 3 3 0 016 0zm7 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+      <h2 class="text-2xl font-extrabold text-gray-800">Modificar Datos</h2>
+    </div>
+
+    <!-- Formulario -->
+    <form class="grid grid-cols-1 sm:grid-cols-2 gap-5 text-sm">
+      <div>
+        <label class="font-medium text-gray-700">Nombre</label>
+        <input
+          [(ngModel)]="client.nombre"
+          name="nombre"
+          class="w-full border px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primario)]"
+        />
+      </div>
+
+      <div>
+        <label class="font-medium text-gray-700">Apellidos</label>
+        <input
+          [(ngModel)]="client.apellidos"
+          name="apellidos"
+          class="w-full border px-3 py-2 rounded-md shadow-sm"
+        />
+      </div>
+
+      <div>
+        <label class="font-medium text-gray-700">DNI</label>
+        <input
+          [(ngModel)]="client.DNI"
+          name="DNI"
+          class="w-full border px-3 py-2 rounded-md shadow-sm"
+        />
+      </div>
+
+      <div>
+        <label class="font-medium text-gray-700">Teléfono</label>
+        <input
+          [(ngModel)]="client.telefono"
+          name="telefono"
+          class="w-full border px-3 py-2 rounded-md shadow-sm"
+        />
+      </div>
+
+      <div>
+        <label class="font-medium text-gray-700">Email</label>
+        <input
+          [(ngModel)]="client.email"
+          name="email"
+          type="email"
+          class="w-full border px-3 py-2 rounded-md shadow-sm"
+        />
+      </div>
+
+      <div>
+        <label class="font-medium text-gray-700">Dirección</label>
+        <input
+          [(ngModel)]="client.direccion"
+          name="direccion"
+          class="w-full border px-3 py-2 rounded-md shadow-sm"
+        />
+      </div>
+
+      <div>
+        <label class="font-medium text-gray-700">Ciudad</label>
+        <input
+          [(ngModel)]="client.ciudad"
+          name="ciudad"
+          class="w-full border px-3 py-2 rounded-md shadow-sm"
+        />
+      </div>
+
+      <div>
+        <label class="font-medium text-gray-700">Provincia</label>
+        <input
+          [(ngModel)]="client.provincia"
+          name="provincia"
+          class="w-full border px-3 py-2 rounded-md shadow-sm"
+        />
+      </div>
+
+      <!-- Footer -->
+      <div class="sm:col-span-2 text-right mt-6">
+        <button
+          type="button"
+          (click)="save()"
+          class="bg-[var(--color-primario)] hover:bg-[var(--color-primario-hover)] text-white px-6 py-2 rounded-lg font-semibold shadow-sm transition-transform hover:scale-105"
+        >
+          Guardar Cambios
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
