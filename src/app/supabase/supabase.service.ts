@@ -110,18 +110,17 @@ export class SupabaseService {
   }
 
   // Permite modificar citas desde el Modal
-  async updateAppointment(id: number, updates: Partial<any>) {
-    const { error } = await supabase
-      .from('citas')
-      .update(updates)
-      .eq('id', id);
+async updateAppointment(id: number, updates: Partial<any>) {
+  const { error } = await supabase
+    .from('citas')
+    .update(updates)
+    .eq('id', id);
 
-    if (error) {
-      console.error('❌ Error updating appointment:', error.message);
-      throw error;
-    }
-
-    console.log('✅ Appointment updated!');
+  if (error) {
+    console.error('❌ Error updating appointment:', error.message);
+    throw error;
   }
+}
+
 
 }
