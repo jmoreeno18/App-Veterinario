@@ -233,6 +233,36 @@ export class SupabaseService {
     );
   }
 
+
+  //Obtener un info perfil
+  getOneUser(id:number): Observable<any>{
+    return from(supabase
+      .from('clientes')
+      .select(`
+  id,
+  nombre,
+  apellidos,
+  email,
+  DNI,
+  telefono,
+  direccion,
+  ciudad,
+  mascotas (
+    nombre,
+    especie,
+    fecha_nacimiento,
+    citas (
+      fecha,
+      hora,
+      motivo,
+      estado
+    )
+  )
+`).eq('id', id)
+    .single()
+    );
+  }
+
   // Obtiene los datos necesarios para las citas
   async getAppointments(): Promise<any[]> {
     const { data, error } = await supabase
@@ -267,16 +297,93 @@ export class SupabaseService {
   }
 
   // Permite modificar citas desde el Modal
-async updateAppointment(id: number, updates: Partial<any>) {
-  const { error } = await supabase
-    .from('citas')
-    .update(updates)
-    .eq('id', id);
+  async updateAppointment(id: number, updates: Partial<any>) {
+    const { error } = await supabase
+      .from('citas')
+      .update(updates)
+      .eq('id', id);
 
-  if (error) {
-    console.error('❌ Error updating appointment:', error.message);
-    throw error;
+    if (error) {
+      console.error('❌ Error updating appointment:', error.message);
+      throw error;
+    }
   }
-}
 
+  /**
+   * Crea un nuevo usuario en la base de datos a través de una función de Supabase.
+   *
+   * @param {string} email - El correo electrónico del nuevo usuario.
+   * @param {string} password - La contraseña del nuevo usuario.
+   * @param {string} nombre - El nombre del nuevo usuario.
+   * @param {string} apellidos - Los apellidos del nuevo usuario.
+   * @param {string} puesto_trabajo - El puesto de trabajo del nuevo usuario.
+   * @returns {Promise<void>} Una promesa que se resuelve cuando el usuario ha sido creado.
+   */
+  async createUser(email: string, password: string, nombre: string, apellidos: string, puesto_trabajo: string): Promise<void> {
+    await supabase.functions.invoke('create-user', {
+      body: {
+        email: email,
+        password: password,
+        nombre: nombre,
+        apellidos: apellidos,
+        puesto_trabajo: puesto_trabajo,
+      }
+    });
+  }
+
+  /**
+   * Elimina un usuario de la base de datos a través de una función de Supabase.
+   *
+   * @param {string} id - El ID del usuario a eliminar.
+   * @returns {Promise<void>} Una promesa que se resuelve cuando el usuario ha sido eliminado.
+   */
+  async deleteUser(id: string): Promise<void> {
+    await supabase.functions.invoke('delete-user', {
+      body: { userId: id }
+    });
+  }
+
+  /**
+   * Actualiza los datos de un usuario en la base de datos a través de una función de Supabase.
+   *
+   * @param {string} id - El ID del usuario a actualizar.
+   * @param {string} email - El nuevo correo electrónico del usuario.
+   * @param {string} nombre - El nuevo nombre del usuario.
+   * @param {string} apellidos - Los nuevos apellidos del usuario.
+   * @param {string} rol - El nuevo rol del usuario.
+   * @param {string} puesto_trabajo - El nuevo puesto de trabajo del usuario.
+   * @param {boolean} activo - Indica si el usuario está activo o no.
+   * @returns {Promise<void>} Una promesa que se resuelve cuando el usuario ha sido actualizado.
+   */
+  async updateUser(
+    id: string,
+    email: string,
+    nombre: string,
+    apellidos: string,
+    rol: string,
+    puesto_trabajo: string,
+    activo: boolean
+  ): Promise<void> {
+    try {
+      const { data, error } = await supabase.functions.invoke('update-user', {
+        body: {
+          id,
+          nombre,
+          apellidos,
+          email,
+          rol,
+          puesto_trabajo,
+          activo
+        }
+      });
+
+      if (error) {
+        console.error("Error:", error);
+      } else {
+        console.log("OK:", data);
+      }
+    } catch (err) {
+      console.error("Falló:", err);
+    }
+  }
 }

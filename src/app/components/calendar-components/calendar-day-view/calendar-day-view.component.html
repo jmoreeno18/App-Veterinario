@@ -18,12 +18,12 @@
     <!-- Total de citas -->
     <div class="bg-[#E3F2FD] text-[#1976D2] px-4 py-2 rounded-lg shadow w-full flex justify-end items-center">
       <span class="text-base font-bold">
-        Total: {{ citas.length }} cita{{ citas.length === 1 ? '' : 's' }}
+        Total: {{ appointments.length }} cita{{ appointments.length === 1 ? '' : 's' }}
       </span>
     </div>
   </div>
 
-  <ng-container *ngIf="citas.length > 0; else sinCitas">
+  <ng-container *ngIf="appointments.length > 0; else sinCitas">
     <div class="hidden md:flex justify-between text-[#263238] font-semibold px-4 text-sm mb-2">
       <div class="w-16 text-center">Hora</div>
       <div class="w-40">Mascota</div>
@@ -37,13 +37,13 @@
 
     <!-- Contenedor de citas -->
     <div class="space-y-4 px-4">
-      <div *ngFor="let cita of citas"
+      <div *ngFor="let cita of appointments"
         class="flex flex-col sm:flex-row justify-between bg-white rounded-lg shadow p-4 gap-4 text-left">
 
         <!-- Hora -->
         <div class="flex flex-col w-full sm:w-16">
           <span class="text-xs text-[#9E9E9E] sm:hidden">Hora:</span>
-          <span class="text-sm font-semibold text-[#263238]">{{ cita.hora }}</span>
+          <span class="text-sm font-semibold text-[#263238]">{{ cita.hora.slice(0, 5) }}</span>
         </div>
 
         <!-- Mascota -->
@@ -70,7 +70,7 @@
         <!-- Nota -->
         <div class="flex flex-col w-full sm:w-24 items-start">
           <span class="text-xs text-[#9E9E9E] sm:hidden">Nota:</span>
-          <button (click)="verNota(cita.notas_previsita)"
+          <button (click)="seeNote(cita.notas_previsita)"
             class="p-1.5 border border-[#1976D2] text-[#1976D2] hover:bg-[#1976D2] hover:text-white rounded-md shadow-sm transition cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
               stroke="currentColor" class="w-5 h-5">
@@ -103,7 +103,7 @@
         <div class="flex flex-col w-full sm:w-20 items-start sm:items-center">
 
           <span class="text-xs text-[#9E9E9E] sm:hidden">Editar:</span>
-          <button (click)="abrirModal(cita)"
+          <button (click)="openModal(cita)"
             class="p-1.5 border border-[#1976D2] text-[#1976D2] hover:bg-[#1976D2] hover:text-white rounded-md shadow-sm transition cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
               stroke="currentColor" class="w-5 h-5">
@@ -130,10 +130,9 @@
   </ng-template>
 </div>
 
-
 <!-- Modal editar -->
 <div *ngIf="modalAbierto" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex justify-center items-center">
-  <div class="bg-[#FFFFFF] rounded-lg shadow-lg w-full max-w-md p-6">
+  <div class="bg-[#FFFFFF] rounded-lg shadow-lg w-full max-w-md p-6 modal-animation">
     <h2 class="text-lg font-bold mb-4 text-[#1976D2]">Editar Cita</h2>
 
     <!-- Hora -->
@@ -194,7 +193,7 @@
 
       <button
         class="px-4 py-1 text-sm font-medium text-white bg-[#1976D2] hover:bg-[#1565C0] rounded-full transition shadow-sm cursor-pointer"
-        (click)="guardarCita()">
+        (click)="saveDate()">
         Guardar
       </button>
     </div>
@@ -202,8 +201,8 @@
 </div>
 
 <!-- Modal notas -->
-<div *ngIf="notaVisible" class="fixed inset-0 bg-black/40 z-50 flex items-center justify-center">
-  <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
+<div *ngIf="notaVisible" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center">
+  <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 modal-animation">
     <h2 class="text-lg font-bold text-[#1976D2] mb-4">Nota de pre-visita</h2>
     <p class="text-sm text-[#263238] whitespace-pre-line">{{ notaSeleccionada }}</p>
     <div class="mt-6 text-right">
