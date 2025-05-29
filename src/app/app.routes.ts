@@ -9,6 +9,7 @@ import { PetListComponent } from './pages/pets/pet-list/pet-list.component';
 import { PetFormComponent } from './pages/pets/pet-form/pet-form.component';
 import { CalendarPageComponent } from './pages/calendar-page/calendar-page.component';
 import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-password-page.component';
+import { ProfileClientComponent } from './components/profile-client/profile-client.component';
 
 export const routes: Routes = [
   // Redirige raíz a login
@@ -23,6 +24,12 @@ export const routes: Routes = [
     path: 'login',
     component: LoginPageComponent,
     // canActivate: [LoginGuard],
+  },
+
+  {
+    path: 'profile/:id',
+    component : ProfileClientComponent
+
   },
 
   // Página para reestablecer la contraseña
