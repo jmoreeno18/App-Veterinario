@@ -1,0 +1,103 @@
+<div class="max-w-3xl mx-auto bg-white p-6 rounded-xl shadow-lg mt-10">
+  <!-- Título -->
+  <div class="mb-4 flex items-center gap-3">
+    <div class="bg-[var(--color-primario)] text-white p-2 rounded-full">
+      🐾
+    </div>
+    <div>
+      <h2 class="text-xl font-bold text-[var(--color-primario)]">Nueva Mascota</h2>
+      <p class="text-sm text-gray-500">Rellena los datos para registrar una mascota</p>
+    </div>
+  </div>
+
+  <!-- Formulario -->
+  <form class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+    <!-- Cliente -->
+    <div class="md:col-span-2">
+      <label class="font-medium">Cliente</label>
+      <select [(ngModel)]="pet.cliente_id" name="cliente_id" class="w-full border px-2 py-1 rounded" required>
+        <option disabled selected>Selecciona un cliente</option>
+        <option *ngFor="let client of clients" [value]="client.id">
+          {{ client.nombre }} {{ client.apellidos }}
+        </option>
+      </select>
+    </div>
+
+    <div>
+      <label class="font-medium">Nombre</label>
+      <input [(ngModel)]="pet.nombre" name="nombre" type="text" class="w-full border focus:border-transparent px-2 py-1 rounded focus:outline-none focus:ring-1 focus:ring-(var[--color-primario])" />
+    </div>
+
+    <div>
+      <label class="font-medium">Especie</label>
+      <input [(ngModel)]="pet.especie" name="especie" type="text" class="w-full border px-2 py-1 rounded" />
+    </div>
+
+    <div>
+      <label class="font-medium">Raza</label>
+      <input [(ngModel)]="pet.raza" name="raza" type="text" class="w-full border px-2 py-1 rounded" />
+    </div>
+
+    <div>
+      <label class="font-medium">Color</label>
+      <input [(ngModel)]="pet.color" name="color" type="text" class="w-full border px-2 py-1 rounded" />
+    </div>
+
+    <div>
+      <label class="font-medium">Sexo</label>
+      <select [(ngModel)]="pet.sexo" name="sexo" class="w-full border px-2 py-1 rounded">
+        <option value="Hembra">Hembra</option>
+        <option value="Macho">Macho</option>
+      </select>
+    </div>
+
+    <div>
+      <label class="font-medium">Nacimiento</label>
+      <input [(ngModel)]="pet.fecha_nacimiento" name="fecha_nacimiento" type="date" class="w-full border px-2 py-1 rounded" />
+    </div>
+
+    <div>
+      <label class="font-medium">Esterilizado</label>
+      <select [(ngModel)]="pet.esterilizado" name="esterilizado" class="w-full border px-2 py-1 rounded">
+        <option [ngValue]="true">Sí</option>
+        <option [ngValue]="false">No</option>
+      </select>
+    </div>
+
+    <div>
+      <label class="font-medium">Productiva</label>
+      <input [(ngModel)]="pet.especie_productiva" name="especie_productiva" type="text" class="w-full border px-2 py-1 rounded" />
+    </div>
+
+    <div>
+      <label class="font-medium">Nº Chip</label>
+      <input [(ngModel)]="pet.n_chip" name="n_chip" type="text" class="w-full border px-2 py-1 rounded" />
+    </div>
+
+    <div>
+      <label class="font-medium">Pasaporte</label>
+      <input [(ngModel)]="pet.n_pasaporte" name="n_pasaporte" type="text" class="w-full border px-2 py-1 rounded" />
+    </div>
+
+    <div>
+      <label class="font-medium">Seguro</label>
+      <input [(ngModel)]="pet.n_seguro" name="n_seguro" type="text" class="w-full border px-2 py-1 rounded" />
+    </div>
+
+    <!-- Observaciones -->
+    <div class="md:col-span-2">
+      <label class="font-medium">Observaciones</label>
+      <textarea [(ngModel)]="pet.observaciones" name="observaciones" rows="2" class="w-full border px-2 py-1 rounded"></textarea>
+    </div>
+  </form>
+
+  <!-- Botón -->
+  <div class="text-right mt-4">
+    <button
+      (click)="savePet()"
+      class="bg-[var(--color-primario)] text-white px-4 py-2 rounded-lg hover:bg-[var(--color-primario-hover)] transition font-semibold"
+    >
+      Guardar
+    </button>
+  </div>
+</div>

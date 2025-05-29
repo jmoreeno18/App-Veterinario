@@ -6,6 +6,7 @@
         <th class="px-6 py-3">Email</th>
         <th class="px-6 py-3">Teléfono</th>
         <th class="px-6 py-3">Registrado</th>
+        <th class="px-6 py-3">Mascota</th>
         <th class="px-6 py-3 text-right">Acciones</th>
       </tr>
     </thead>
@@ -29,6 +30,20 @@
         <td class="px-6 py-4">{{ client.email }}</td>
         <td class="px-6 py-4">{{ client.telefono }}</td>
         <td class="px-6 py-4">{{ client.fecha_alta | date : "dd/MM/yyyy" }}</td>
+        <td class="px-6 py-4">
+          <ng-container *ngIf="client.mascotas?.length > 0; else noMascotas">
+            <button
+              *ngFor="let m of client.mascotas"
+              (click)="openPetModal(m)"
+              class="text-[var(--color-primario)] hover:underline block text-left cursor-pointer"
+            >
+              {{ m.nombre }} ({{m.especie}})
+            </button>
+          </ng-container>
+          <ng-template #noMascotas>
+            <span class="text-gray-400 italic">Sin mascotas</span>
+          </ng-template>
+        </td>
         <td class="px-6 py-4 text-right space-x-2 whitespace-nowrap flex justify-end">
           <!-- Botones acción -->
           <button
@@ -72,4 +87,154 @@
   (updated)="onClientUpdated()"
 ></app-modal-client-edit>
 
+
+<!-- Modal principal - Detalles de Mascota -->
+<div *ngIf="selectedPet" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center modal-animation">
+  <div class="bg-white w-full max-w-xl p-6 rounded-2xl shadow-2xl relative transition-all">
+
+    <!-- Botón cerrar -->
+    <button (click)="closePetModal()" class="absolute top-4 right-4 text-gray-400 hover:text-black transition" aria-label="Cerrar">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+
+    <!-- Cabecera -->
+    <div class="flex items-center gap-3 mb-4 border-b pb-3">
+      <div class="bg-[var(--color-primario)] text-white w-12 h-12 rounded-full flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M5.121 17.804A13.937 13.937 0 0112 15c2.5 0 4.847.657 6.879 1.804M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+      </div>
+      <h2 class="text-xl font-bold text-gray-800">Detalles de la Mascota</h2>
+    </div>
+
+    <!-- Cuerpo -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm text-gray-700">
+      <p><strong>Nombre:</strong> {{ selectedPet?.nombre }}</p>
+      <p><strong>Especie:</strong> {{ selectedPet?.especie }}</p>
+      <p><strong>Raza:</strong> {{ selectedPet?.raza }}</p>
+      <p><strong>Color:</strong> {{ selectedPet?.color }}</p>
+      <p><strong>Sexo:</strong> {{ selectedPet?.sexo }}</p>
+      <p><strong>Fecha Nacimiento:</strong> {{ selectedPet?.fecha_nacimiento | date: 'dd/MM/yyyy' }}</p>
+      <p><strong>Esterilizado:</strong> {{ selectedPet?.esterilizado ? 'Sí' : 'No' }}</p>
+      <p><strong>Productiva:</strong> {{ selectedPet?.especie_productiva }}</p>
+      <p><strong>Chip:</strong> {{ selectedPet?.n_chip }}</p>
+      <p><strong>Pasaporte:</strong> {{ selectedPet?.n_pasaporte }}</p>
+      <p><strong>Seguro:</strong> {{ selectedPet?.n_seguro }}</p>
+      <p><strong>Observaciones:</strong> {{ selectedPet?.observaciones || '—' }}</p>
+    </div>
+
+    <!-- Footer -->
+    <div class="flex justify-between items-center mt-6 border-t pt-4">
+      <div class="flex gap-2">
+        <button (click)="showEditPetModal = true" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+          Editar
+        </button>
+        <button (click)="triggerDeletePet(selectedPet)" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+          Eliminar
+        </button>
+      </div>
+      <button (click)="closePetModal()" class="bg-[var(--color-primario)] hover:bg-[var(--color-primario-hover)] text-white px-5 py-2 rounded-lg font-medium transition">
+        Cerrar
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Edición de Mascota -->
+<div *ngIf="showEditPetModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center">
+  <div class="bg-white max-w-2xl w-full p-6 rounded-2xl shadow-2xl modal-animation relative">
+
+    <!-- Cabecera -->
+    <div class="mb-5 border-b pb-4 flex items-center justify-between">
+      <h3 class="text-xl font-bold text-[var(--color-primario)] flex items-center gap-2">
+        ✏️ Editando a <span class="text-gray-800">{{ selectedPet?.nombre }}</span>
+      </h3>
+      <button
+        (click)="showEditPetModal = false"
+        class="text-gray-400 hover:text-red-500 transition"
+        aria-label="Cerrar"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Formulario -->
+    <form class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-800">
+
+      <div>
+        <label class="font-semibold mb-1 block">Nombre</label>
+        <input [(ngModel)]="selectedPet.nombre" name="nombre" type="text" class="w-full border px-3 py-2 rounded-lg" />
+      </div>
+
+      <div>
+        <label class="font-semibold mb-1 block">Especie</label>
+        <input [(ngModel)]="selectedPet.especie" name="especie" type="text" class="w-full border px-3 py-2 rounded-lg" />
+      </div>
+
+      <div>
+        <label class="font-semibold mb-1 block">Raza</label>
+        <input [(ngModel)]="selectedPet.raza" name="raza" type="text" class="w-full border px-3 py-2 rounded-lg" />
+      </div>
+
+      <div>
+        <label class="font-semibold mb-1 block">Color</label>
+        <input [(ngModel)]="selectedPet.color" name="color" type="text" class="w-full border px-3 py-2 rounded-lg" />
+      </div>
+
+      <div>
+        <label class="font-semibold mb-1 block">Sexo</label>
+        <input [(ngModel)]="selectedPet.sexo" name="sexo" type="text" class="w-full border px-3 py-2 rounded-lg" />
+      </div>
+
+      <div>
+        <label class="font-semibold mb-1 block">Fecha de Nacimiento</label>
+        <input [(ngModel)]="selectedPet.fecha_nacimiento" name="fecha" type="date" class="w-full border px-3 py-2 rounded-lg" />
+      </div>
+
+      <div>
+        <label class="font-semibold mb-1 block">Nº Chip</label>
+        <input [(ngModel)]="selectedPet.n_chip" name="chip" type="text" class="w-full border px-3 py-2 rounded-lg" />
+      </div>
+
+      <div>
+        <label class="font-semibold mb-1 block">Nº Pasaporte</label>
+        <input [(ngModel)]="selectedPet.n_pasaporte" name="pasaporte" type="text" class="w-full border px-3 py-2 rounded-lg" />
+      </div>
+
+      <div>
+        <label class="font-semibold mb-1 block">Nº Seguro</label>
+        <input [(ngModel)]="selectedPet.n_seguro" name="seguro" type="text" class="w-full border px-3 py-2 rounded-lg" />
+      </div>
+
+      <div>
+        <label class="font-semibold mb-1 block">Esterilizado</label>
+        <select [(ngModel)]="selectedPet.esterilizado" name="esterilizado" class="w-full border px-3 py-2 rounded-lg">
+          <option [ngValue]="true">Sí</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="font-semibold mb-1 block">¿Especie productiva?</label>
+        <input [(ngModel)]="selectedPet.especie_productiva" name="especie_productiva" type="text" class="w-full border px-3 py-2 rounded-lg" />
+      </div>
+
+      <div class="sm:col-span-2">
+        <label class="font-semibold mb-1 block">Observaciones</label>
+        <textarea [(ngModel)]="selectedPet.observaciones" name="observaciones" rows="3" class="w-full border px-3 py-2 rounded-lg resize-none"></textarea>
+      </div>
+    </form>
+
+    <!-- Acciones -->
+    <div class="mt-6 text-right">
+      <button (click)="savePetEdit()" class="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700 transition">Guardar</button>
+      <button (click)="showEditPetModal = false" class="ml-3 px-5 py-2 rounded-lg border text-gray-600 hover:bg-gray-100 transition">Cancelar</button>
+    </div>
+  </div>
+</div>
 
