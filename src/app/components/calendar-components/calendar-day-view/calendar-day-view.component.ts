@@ -19,14 +19,15 @@ interface Cita {
   selector: 'app-calendar-day-view',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './calendar-day-view.component.html'
+  templateUrl: './calendar-day-view.component.html',
+  styleUrl: './calendar-day-view.component.css'
 })
 export class CalendarDayViewComponent implements OnChanges {
-  constructor(private supabase: SupabaseService) {}
+  constructor(private supabase: SupabaseService) { }
 
-  @Input() fechaSeleccionada!: Date;
-  @Input() citas: Cita[] = [];
-  @Output() citaActualizada = new EventEmitter<void>();
+  @Input() selectedDate!: Date;
+  @Input() appointments: Cita[] = [];
+  @Output() appointmentUpdated = new EventEmitter<void>();
 
   successMsg = '';
   fechaTraducida: string = '';
@@ -47,7 +48,7 @@ export class CalendarDayViewComponent implements OnChanges {
     cliente: { nombre: '', apellidos: '' }
   };
 
-  abrirModal(cita: Cita) {
+  openModal(cita: Cita) {
     this.selectedCita = {
       id: cita.id,
       fecha: cita.fecha,
@@ -62,7 +63,7 @@ export class CalendarDayViewComponent implements OnChanges {
     this.modalAbierto = true;
   }
 
-  async guardarCita() {
+  async saveDate() {
     try {
       await this.supabase.updateAppointment(this.selectedCita.id, {
         hora: this.selectedCita.hora,
@@ -71,28 +72,33 @@ export class CalendarDayViewComponent implements OnChanges {
         notas_previsita: this.selectedCita.notas_previsita
       });
 
-      const index = this.citas.findIndex(c => c.id === this.selectedCita.id);
+      const index = this.appointments.findIndex(c => c.id === this.selectedCita.id);
       if (index !== -1) {
-        this.citas[index] = { ...this.selectedCita };
+        this.appointments[index] = { ...this.selectedCita };
       }
 
       this.successMsg = '✅ Cita actualizada correctamente.';
       this.modalAbierto = false;
-      this.citaActualizada.emit(); 
+      this.appointmentUpdated.emit();
+
+      // Oculta el banner después de 3 segundos
+      setTimeout(() => {
+        this.successMsg = '';
+      }, 3000);
 
     } catch (err) {
       alert('Error al guardar la cita');
     }
   }
 
-  verNota(nota: string | undefined) {
+  seeNote(nota: string | undefined) {
     this.notaSeleccionada = nota || 'Sin notas registradas';
     this.notaVisible = true;
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['fechaSeleccionada'] && this.fechaSeleccionada) {
-      this.fechaTraducida = this.fechaSeleccionada.toLocaleDateString('es-ES', {
+    if (changes['fechaSeleccionada'] && this.selectedDate) {
+      this.fechaTraducida = this.selectedDate.toLocaleDateString('es-ES', {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
