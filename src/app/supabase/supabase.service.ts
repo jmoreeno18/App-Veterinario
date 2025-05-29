@@ -233,6 +233,36 @@ export class SupabaseService {
     );
   }
 
+
+  //Obtener un info perfil
+  getOneUser(id:number): Observable<any>{
+    return from(supabase
+      .from('clientes')
+      .select(`
+  id,
+  nombre,
+  apellidos,
+  email,
+  DNI,
+  telefono,
+  direccion,
+  ciudad,
+  mascotas (
+    nombre,
+    especie,
+    fecha_nacimiento,
+    citas (
+      fecha,
+      hora,
+      motivo,
+      estado
+    )
+  )
+`).eq('id', id)
+    .single()
+    );
+  }
+
   // Obtiene los datos necesarios para las citas
   async getAppointments(): Promise<any[]> {
     const { data, error } = await supabase

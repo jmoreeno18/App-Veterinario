@@ -12,22 +12,22 @@
           <h1 class="text-xl font-semibold text-white">Perfil cliente</h1>
         </div>
         <div class="flex items-center gap-4">
-          <button class="relative text-white hover:text-gray-200 transition-colors" 
+<!--           <button class="relative text-white hover:text-gray-200 transition-colors" 
                   aria-label="Notificaciones" (click)="openNotifications()">
             <i class="fas fa-bell"></i>
             <span *ngIf="unreadNotifications > 0" 
                   class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-white text-xs flex items-center justify-center">
               {{unreadNotifications}}
             </span>
-          </button>
-          <button class="relative text-white hover:text-gray-200 transition-colors" 
+          </button> -->
+<!--           <button class="relative text-white hover:text-gray-200 transition-colors" 
                   aria-label="Mensajes" (click)="openMessages()">
             <i class="fas fa-envelope"></i>
             <span *ngIf="unreadMessages > 0" 
                   class="absolute -top-1 -right-1 w-4 h-4 bg-blue-500 rounded-full text-white text-xs flex items-center justify-center">
               {{unreadMessages}}
             </span>
-          </button>
+          </button> -->
         </div>
       </header>
 
@@ -37,24 +37,27 @@
         <section class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8">
           <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
             <div class="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">
-              {{userProfile.initials}}
+              {{ getUserInitials() }}
             </div>
             <div class="flex-1">
-              <h2 class="text-2xl font-bold text-[var(--color-texto)] mb-2">{{userProfile.name}}</h2>
+              <h2 class="text-2xl font-bold text-[var(--color-texto)] mb-2">{{user?.nombre}} {{user?.apellidos}}</h2>
               <p class="text-[var(--color-texto-secundario)] mb-1">
-                <i class="fas fa-envelope mr-2"></i>{{userProfile.email}}
+                <i class="fas fa-envelope mr-2"></i>{{user?.email}}
               </p>
-              <p class="text-[var(--color-texto-secundario)] mb-1">
-                <i class="fas fa-phone mr-2"></i>{{userProfile.phone}}
+              <p class="text-[var(--color-texto-secundario)] mb-1" *ngIf="user?.telefono">
+                <i class="fas fa-phone mr-2"></i>{{user?.telefono}}
               </p>
-              <p class="text-[var(--color-texto-secundario)]">
-                <i class="fas fa-map-marker-alt mr-2"></i>{{userProfile.address}}
+              <p class="text-[var(--color-texto-secundario)] mb-1" *ngIf="user?.DNI">
+                <i class="fas fa-id-card mr-2"></i>{{user?.DNI}}
+              </p>
+              <p class="text-[var(--color-texto-secundario)]" *ngIf="user?.direccion">
+                <i class="fas fa-map-marker-alt mr-2"></i>{{user?.direccion}}, {{user?.ciudad}}
               </p>
             </div>
-            <button (click)="editProfile()" 
+       <!--      <button (click)="editProfile()" 
                     class="bg-[var(--color-primario)] text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors flex items-center">
               <i class="fas fa-edit mr-2"></i>Editar Perfil
-            </button>
+            </button> -->
           </div>
         </section>
 
@@ -89,27 +92,28 @@
             <div class="flex justify-between items-center mb-6">
               <h2 class="text-xl font-bold text-[var(--color-texto)]">
                 <i class="fas fa-paw mr-2 text-[var(--color-primario)]"></i>
-                Mis Mascotas
+                Mascotas
               </h2>
               <button (click)="addPet()" 
-                      class="bg-[var(--color-secundario)] text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors flex items-center">
+                      class="bg-[var(--color-primario)] text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors flex items-center">
                 <i class="fas fa-plus mr-2"></i>Agregar Mascota
               </button>
             </div>
 
             <div class="space-y-4">
-              <div *ngFor="let pet of pets" 
-                   (click)="viewPetDetails(pet)"
+              <div *ngFor="let pet of Pets" 
                    class="bg-white rounded-xl shadow-sm border border-gray-100 border-l-4 border-l-[var(--color-primario)] p-4 cursor-pointer hover:shadow-md transition-all hover:-translate-y-1">
                 <div class="flex items-center gap-4">
-                  <div [class]="'w-16 h-16 bg-gradient-to-br ' + pet.gradientFrom + ' ' + pet.gradientTo + ' rounded-full flex items-center justify-center text-white text-xl'">
-                    {{pet.emoji}}
-                  </div>
+                  <img [src]="'assets/icons/' + pet.especie.toLowerCase() + '.svg'" 
+                       class="w-9 h-9"/>
                   <div class="flex-1">
-                    <h3 class="font-semibold text-[var(--color-texto)]">{{pet.name}}</h3>
-                    <p class="text-sm text-[var(--color-texto-secundario)]">{{pet.breed}} • {{pet.age}} años</p>
+                    <h3 class="font-semibold text-[var(--color-texto)]">{{pet.nombre}}</h3>
+                    <p class="text-sm text-[var(--color-texto-secundario)]">
+                      <span class="capitalize">{{pet.especie}}</span> • 
+                      Nacimiento: {{pet.fecha_nacimiento | date:'dd/MM/yyyy'}}
+                    </p>
                     <p class="text-xs text-[var(--color-texto-secundario)]">
-                     <!--  Última visita: {{pet.lastVisit | date:'d MMM y'}} -->
+                      Última visita: {{ getLastVisit(pet) }}
                     </p>
                   </div>
                   <button class="text-[var(--color-primario)] hover:text-blue-700 transition-colors">
@@ -133,36 +137,23 @@
               </button>
             </div>
 
-            <div class="space-y-4">
-              <div *ngFor="let appointment of appointments" 
-                   (click)="viewAppointmentDetails(appointment)"
+             <div class="space-y-4">
+              <div *ngFor="let appointment of allAppointments" 
                    class="bg-white rounded-xl shadow-sm border border-gray-100 border-l-4 border-l-[var(--color-secundario)] p-4 cursor-pointer hover:shadow-md transition-all hover:-translate-y-1">
                 <div class="flex justify-between items-start mb-2">
                   <div>
-                    <h3 class="font-semibold text-[var(--color-texto)]">{{appointment.type}}</h3>
-                    <p class="text-sm text-[var(--color-texto-secundario)]">{{appointment.petName}} • {{appointment.veterinarian}}</p>
+                    <h3 class="font-semibold text-[var(--color-texto)]">{{appointment.hora}}</h3>
+                    <p class="text-sm text-[var(--color-texto-secundario)]">{{appointment.petName}}</p>
                   </div>
-                  <span [class]="'px-2 py-1 rounded-full text-xs font-medium ' + getStatusClass(appointment.status)">
-                    {{getStatusText(appointment.status)}}
+                  <span [class]="'px-2 py-1 rounded-full text-xs font-medium ' + getStatusClass(appointment.estado)">
+                    {{getStatusText(appointment.estado)}}
                   </span>
                 </div>
                 <div class="flex justify-between items-center text-sm text-[var(--color-texto-secundario)]">
-                  <!-- <span>{{appointment.date | date:'d MMM y'}} • {{appointment.time}}</span> -->
-                  <button class="text-[var(--color-primario)] hover:text-blue-700 transition-colors">
-                    Ver detalles
-                  </button>
+                   <span>{{appointment.fecha | date:'d MMM y'}} • {{appointment.hora}}</span> 
                 </div>
               </div>
-            </div>
-
-            <!-- Ver más citas -->
-            <div class="text-center mt-6">
-              <button (click)="viewAllAppointments()" 
-                      class="text-[var(--color-primario)] hover:text-blue-700 font-medium transition-colors">
-                Ver todas las citas
-                <i class="fas fa-arrow-right ml-2"></i>
-              </button>
-            </div>
+            </div> 
           </section>
         </div>
       </main>
