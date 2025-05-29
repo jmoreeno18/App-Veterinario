@@ -36,7 +36,7 @@ export class CalendarPageComponent implements OnInit {
     );
   }
 
-  cambiarVista(vista: 'day' | 'month'): void {
+  changeView(vista: 'day' | 'month'): void {
     this.view = vista;
   }
 
@@ -62,6 +62,7 @@ export class CalendarPageComponent implements OnInit {
         nombre: c.mascotas?.clientes?.nombre || '—',
         apellidos: c.mascotas?.clientes?.apellidos || ''
       }
-    }));
+    }))
+    .sort((a, b) => a.hora.localeCompare(b.hora));
   }
 }
