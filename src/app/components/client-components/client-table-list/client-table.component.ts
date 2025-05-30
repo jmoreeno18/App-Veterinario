@@ -34,7 +34,6 @@ export class ClientTableComponent {
   showDeleteModal = false;
   selectedPet: any = null;
 
-
   constructor(private supabaseService: SupabaseService) {}
 
   openModal(client: any) {
