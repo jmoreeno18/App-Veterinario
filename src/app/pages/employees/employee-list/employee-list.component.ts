@@ -23,11 +23,13 @@ export class EmployeeListComponent implements OnInit {
   selectedEmployeeEdit: any = null;
   showEditModal: boolean = false;
 
+  loading = true;
 
   constructor(private supabase: SupabaseService) {}
 
   async ngOnInit() {
     await this.loadEmployees();
+    this.loading = false;
   }
 
   async loadEmployees() {
@@ -39,7 +41,6 @@ export class EmployeeListComponent implements OnInit {
     if (error) {
       console.error('Error al obtener trabajadores:', error);
     } else {
-      console.log(data)
       this.employees = data;
     }
   }
@@ -55,20 +56,16 @@ export class EmployeeListComponent implements OnInit {
   }
 
   async confirmDeleteEmployee() {
-    const { error } = await this.supabase.client
-      .from('usuarios')
-      .delete()
-      .eq('id', this.selectedEmployee.id);
-
-    if (error) {
-      console.error('❌ Error al eliminar empleado:', error.message);
-      alert('❌ Error al eliminar empleado');
-    } else {
-      alert('✅ Empleado eliminado correctamente');
-      this.closeDeleteModal();
-      this.loadEmployees(); // Actualiza la lista
-    }
+  try {
+    await this.supabase.deleteUser(this.selectedEmployee.id);
+    this.closeDeleteModal();
+    this.loadEmployees(); // Actualiza la lista
+  } catch (error) {
+    console.error('❌ Error al eliminar empleado:', error);
+    alert('❌ Error al eliminar empleado');
   }
+}
+
 
   openEditModal(emp: any) {
     this.selectedEmployeeEdit = { ...emp }; // Copia para evitar modificar en vivo
@@ -81,19 +78,25 @@ closeEditModal() {
 }
 
 async confirmEditEmployee() {
-  const { id, ...updatedData } = this.selectedEmployeeEdit;
-  const { error } = await this.supabase.client
-    .from('usuarios')
-    .update(updatedData)
-    .eq('id', id);
+  const emp = this.selectedEmployeeEdit;
 
-  if (error) {
-    console.error('❌ Error al editar empleado:', error.message);
-    alert('❌ Error al editar empleado');
-  } else {
-    alert('✅ Empleado actualizado correctamente');
+  try {
+    await this.supabase.updateUser(
+      emp.id,
+      emp.email,
+      emp.nombre,
+      emp.apellidos,
+      emp.rol,
+      emp.puesto_trabajo,
+      emp.activo
+    );
+
     this.closeEditModal();
     this.loadEmployees();
+  } catch (error) {
+    console.error('❌ Error al editar empleado:', error);
+    alert('❌ Error al editar empleado');
   }
 }
+
 }

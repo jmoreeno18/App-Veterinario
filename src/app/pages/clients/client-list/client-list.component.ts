@@ -24,13 +24,16 @@ export class ClientListComponent implements OnInit {
   selectedClient: any = null;
   showDeleteModal: boolean = false;
 
+  loading= true;
+
   constructor(
     private supabaseService: SupabaseService,
     private cdr: ChangeDetectorRef
   ) {}
 
   async ngOnInit() {
-    this.loadClients();
+    await this.loadClients();
+    this.loading = false;
   }
 
   async loadClients() {

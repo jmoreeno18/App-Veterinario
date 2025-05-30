@@ -328,7 +328,8 @@ export class SupabaseService {
         apellidos: apellidos,
         puesto_trabajo: puesto_trabajo,
       }
-    });
+  });
+
   }
 
   /**

@@ -1,4 +1,11 @@
-<div class="max-w-6xl mx-auto my-10 p-6 bg-white rounded-2xl shadow-md">
+<div *ngIf="loading" class="flex flex-col items-center justify-center h-60 space-y-2">
+  <div class="relative w-12 h-12">
+    <div class="absolute inset-0 rounded-full border-4 border-[var(--color-primario)] border-t-transparent animate-spin"></div>
+  </div>
+  <p class="text-sm text-gray-500">Cargando empleados...</p>
+</div>
+
+<div *ngIf="!loading" class="max-w-6xl mx-auto my-10 p-6 bg-white rounded-2xl shadow-md">
   <div class="flex justify-between items-center mb-6">
     <h2 class="text-2xl font-bold text-[var(--color-primario)] flex items-center gap-2">
       <icon-user></icon-user> Lista de Trabajadores
