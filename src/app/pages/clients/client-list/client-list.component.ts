@@ -36,7 +36,7 @@ export class ClientListComponent implements OnInit {
   async loadClients() {
     const { data, error } = await this.supabaseService.client
       .from('clientes')
-      .select('*')
+      .select('*, mascotas(*)')
       .order('fecha_alta', { ascending: false });
 
     if (!error && data) {

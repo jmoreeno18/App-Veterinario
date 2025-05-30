@@ -82,3 +82,19 @@ input:-webkit-autofill {
   border-left: 4px solid var(--color-error);
   color: var(--color-error);
 }
+
+/* Animacion para modales */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-animation {
+  animation: fadeInUp 0.4s ease-out forwards;
+}
