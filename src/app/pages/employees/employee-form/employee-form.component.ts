@@ -15,8 +15,8 @@ export class EmployeeFormComponent {
     nombre: '',
     apellidos: '',
     email: '',
+    password: '',
     puesto_trabajo: '',
-    activo: true,
   };
 
   constructor(
@@ -25,21 +25,14 @@ export class EmployeeFormComponent {
   ) {}
 
   async saveEmployee() {
-    const payload = {
-      ...this.employee,
-      created_at: new Date().toISOString(),
-    };
+    const { nombre, apellidos, email, password, puesto_trabajo } = this.employee;
 
-    const { error } = await this.supabaseService.client
-      .from('usuarios')
-      .insert([payload]);
-
-    if (error) {
-      console.error('Error al guardar trabajador:', error.message);
-      alert('❌ Error al guardar trabajador. Revisa los datos.');
-    } else {
-      alert('✅ Trabajador guardado correctamente');
+  try {
+      await this.supabaseService.createUser(email, password, nombre, apellidos, puesto_trabajo);
       this.router.navigate(['/dashboard/employees']);
-    }
+    } catch (error: any) {
+        console.error('❌ Error al crear trabajador:', error.message || error);
   }
+}
+
 }

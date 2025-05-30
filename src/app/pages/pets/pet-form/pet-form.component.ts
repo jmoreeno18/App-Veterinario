@@ -52,7 +52,21 @@ export class PetFormComponent implements OnInit {
       alert('❌ Error al guardar mascota.');
     } else {
       alert('✅ Mascota guardada correctamente');
-      this.router.navigate(['/dashboard/pets']);
+      this.pet = {
+        cliente_id: null,
+        nombre: '',
+        especie: '',
+        raza: '',
+        color: '',
+        sexo: '',
+        fecha_nacimiento: '',
+        esterilizado: false,
+        especie_productiva: '',
+        n_chip: '',
+        n_pasaporte: '',
+        n_seguro: '',
+        observaciones: ''
+      };
     }
   }
 }
