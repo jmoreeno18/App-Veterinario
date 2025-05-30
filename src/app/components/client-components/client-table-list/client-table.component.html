@@ -12,10 +12,12 @@
     </thead>
     <tbody>
       <tr
-        *ngFor="let client of clients"
+        *ngFor="let client of clients | filtroClientes:filtro"
         class="border-b hover:bg-gray-50 transition"
       >
-        <td class="px-6 py-4 flex items-center gap-3">
+
+      <td class="px-6 py-4 align-middle">
+        <div class="flex items-center gap-3">
           <div
             class="w-9 h-9 rounded-full bg-[var(--color-primario)] text-white flex items-center justify-center font-semibold uppercase"
           >
@@ -26,7 +28,10 @@
               {{ client.nombre }} {{ client.apellidos }}
             </div>
           </div>
-        </td>
+        </div>
+      </td>
+
+
         <td class="px-6 py-4">{{ client.email }}</td>
         <td class="px-6 py-4">{{ client.telefono }}</td>
         <td class="px-6 py-4">{{ client.fecha_alta | date : "dd/MM/yyyy" }}</td>
@@ -44,8 +49,8 @@
             <span class="text-gray-400 italic">Sin mascotas</span>
           </ng-template>
         </td>
-        <td class="px-6 py-4 text-right space-x-2 whitespace-nowrap flex justify-end">
-          <!-- Botones acción -->
+       <td class="px-6 py-4 text-right whitespace-nowrap">
+        <div class="flex items-center justify-end space-x-2">
           <button
             (click)="openModal(client)"
             title="Ver"
@@ -54,7 +59,7 @@
             <icon-view></icon-view>
           </button>
           <button
-          (click)="openEditModal(client)"
+            (click)="openEditModal(client)"
             title="Editar"
             class="text-blue-600 hover:text-blue-800 hover:scale-105 transition cursor-pointer w-6"
           >
@@ -67,7 +72,9 @@
           >
             <icon-delete></icon-delete>
           </button>
-        </td>
+        </div>
+      </td>
+
       </tr>
     </tbody>
   </table>

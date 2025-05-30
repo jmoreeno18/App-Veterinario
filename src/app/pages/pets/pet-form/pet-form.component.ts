@@ -36,9 +36,8 @@ export class PetFormComponent implements OnInit {
       console.error('Error al guardar mascota:', error.message);
       alert('❌ Error al guardar mascota.');
     } else {
-      alert('✅ Mascota guardada correctamente');
+      alert('Se ha registrado correctamente ✅')
       this.pet = this.initPet();
-      this.router.navigate(['/dashboard/pets']);
     }
   }
 

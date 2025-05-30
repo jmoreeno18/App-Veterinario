@@ -7,6 +7,7 @@ import { ModalClientViewComponent } from '../modal-client-view/modal-client-view
 import { ModalClientEditComponent } from "../modal-client-edit/modal-client-edit.component";
 import { SupabaseService } from '../../../supabase/supabase.service';
 import { FormsModule } from '@angular/forms';
+import { FiltroClientesPipe } from '../../../pages/clients/client-list/filtro-clientes.pipe';
 
 @Component({
   selector: 'app-client-table',
@@ -18,12 +19,14 @@ import { FormsModule } from '@angular/forms';
     IconEditComponent,
     IconViewComponent,
     ModalClientViewComponent,
-    ModalClientEditComponent
+    ModalClientEditComponent,
+    FiltroClientesPipe
   ],
   templateUrl: './client-table.component.html',
 })
 export class ClientTableComponent {
   @Input() clients: any[] = [];
+  @Input() filtro: string = '';
   @Output() updated = new EventEmitter<void>();
   @Output() delete = new EventEmitter<void>();
   @Output() deleteClient = new EventEmitter<any>();

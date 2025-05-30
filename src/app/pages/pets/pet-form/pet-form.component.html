@@ -25,12 +25,18 @@
 
     <div>
       <label class="font-medium">Nombre</label>
-      <input [(ngModel)]="pet.nombre" name="nombre" type="text" class="w-full border focus:border-transparent px-2 py-1 rounded focus:outline-none focus:ring-1 focus:ring-[var(--color-primario)]" />
+      <input [(ngModel)]="pet.nombre" name="nombre" type="text" class="w-full border px-2 py-1 rounded focus:outline-none focus:ring-1 focus:ring-[var(--color-primario)]" />
     </div>
 
     <div>
       <label class="font-medium">Especie</label>
-      <input [(ngModel)]="pet.especie" name="especie" type="text" class="w-full border px-2 py-1 rounded focus:outline-none focus:ring-1 focus:ring-[var(--color-primario)]" />
+      <select [(ngModel)]="pet.especie" name="especie" class="w-full border px-2 py-1 rounded focus:outline-none focus:ring-1 focus:ring-[var(--color-primario)]" required>
+        <option value="" disabled selected>Selecciona una especie</option>
+        <option value="perro">Perro</option>
+        <option value="gato">Gato</option>
+        <option value="ganado">Ganado</option>
+        <option value="exótico">Exótico</option>
+      </select>
     </div>
 
     <div>

@@ -5,6 +5,8 @@ import { SupabaseService } from './../../../supabase/supabase.service';
 import { ClientTableComponent } from '../../../components/client-components/client-table-list/client-table.component';
 import { IconPlusComponent } from '../../../components/icons/icon-plus.component';
 import { IconUserComponent } from '../../../components/icons/icon-user.component';
+import { FormsModule } from '@angular/forms';
+import { FiltroClientesPipe } from './filtro-clientes.pipe';
 
 @Component({
   selector: 'app-client-list',
@@ -15,6 +17,7 @@ import { IconUserComponent } from '../../../components/icons/icon-user.component
     ClientTableComponent,
     IconPlusComponent,
     IconUserComponent,
+    FormsModule,
   ],
   templateUrl: './client-list.component.html',
 })
@@ -25,6 +28,8 @@ export class ClientListComponent implements OnInit {
   showDeleteModal: boolean = false;
 
   loading= true;
+
+  filtro: string = '';
 
   constructor(
     private supabaseService: SupabaseService,
