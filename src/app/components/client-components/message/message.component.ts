@@ -8,6 +8,6 @@ import { Component, Input } from '@angular/core';
 })
 export class ToastMessageComponent {
   @Input() message: string = '';
-  @Input() type: 'success' | 'error' = 'success'; // Cambia colores
+  @Input() type: 'success' | 'error' = 'success';
   @Input() show: boolean = false;
 }

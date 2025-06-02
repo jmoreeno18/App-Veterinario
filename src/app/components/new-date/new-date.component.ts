@@ -3,11 +3,12 @@ import { SupabaseService } from "../../supabase/supabase.service";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { IconPlusComponent } from "../icons/icon-plus.component";
+import { ToastMessageComponent } from "../client-components/message/message.component";
 
 @Component({
   selector: 'app-new-date',
   standalone: true,
-  imports: [CommonModule, FormsModule, IconPlusComponent],
+  imports: [CommonModule, FormsModule, IconPlusComponent, ToastMessageComponent],
   templateUrl: './new-date.component.html',
 })
 export class NewDateComponent implements OnInit {
@@ -73,8 +74,7 @@ export class NewDateComponent implements OnInit {
     const { mascota_id, fecha, hora, motivo, trabajador_id } = this.newDate;
 
     if (!this.selectedClienteId || !mascota_id || !fecha || !hora || !motivo || !trabajador_id) {
-      alert('❗ Todos los campos obligatorios deben estar completos.');
-      return;
+      this.showToast('❌ Error al agregar cita.', 'error');
     }
 
     // Asegúrate de no incluir cliente_id si no está en la tabla "citas"
@@ -87,10 +87,9 @@ export class NewDateComponent implements OnInit {
       .insert([cita]);
 
     if (error) {
-      console.error('❌ Error al guardar la cita:', error.message);
-      alert('❌ Error al guardar la cita');
+      this.showToast('❌ Error al agregar cita.', 'error');
     } else {
-      alert('✅ Cita guardada correctamente');
+      this.showToast('✅ Cita agregada correctamente.', 'success');
       this.citaCreada.emit(); // Notificamos al componente padre
       this.resetForm();
     }
@@ -110,4 +109,19 @@ export class NewDateComponent implements OnInit {
     this.mascotas = [];
     this.showModal = false;
   }
+
+   toast = {
+    show: false,
+    message: '',
+    type: 'error' as 'success' | 'error',
+  };
+
+  private showToast(message: string, type: 'success' | 'error') {
+    this.toast.message = message;
+    this.toast.type = type;
+    this.toast.show = true;
+
+    setTimeout(() => (this.toast.show = false), 3000); // Se oculta tras 3s
+  }
+
 }
