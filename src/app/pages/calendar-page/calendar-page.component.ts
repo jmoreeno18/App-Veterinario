@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CalendarDayViewComponent } from '../../components/calendar-components/calendar-day-view/calendar-day-view.component';
 import { CalendarMonthViewComponent } from '../../components/calendar-components/calendario-month-view/calendar-month-view.component';
 import { SupabaseService } from '../../supabase/supabase.service';
+import { NewDateComponent } from '../../components/new-date/new-date.component';
 
 @Component({
   selector: 'app-calendar-page',
@@ -11,6 +12,7 @@ import { SupabaseService } from '../../supabase/supabase.service';
     CommonModule,
     CalendarDayViewComponent,
     CalendarMonthViewComponent,
+    NewDateComponent,
   ],
   templateUrl: './calendar-page.component.html'
 })

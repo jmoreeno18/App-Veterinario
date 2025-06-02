@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { SupabaseService } from './../../../supabase/supabase.service';
+import { ToastMessageComponent } from '../../../components/client-components/message/message.component';
 
 @Component({
   selector: 'app-form-client',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, ToastMessageComponent],
   templateUrl: './client-form.component.html',
 })
 export class ClientFormComponent implements OnInit {
@@ -46,10 +47,12 @@ export class ClientFormComponent implements OnInit {
 
     if (error) {
       console.error('Error al guardar cliente:', error.message);
-      alert('❌ Error al guardar cliente. Revisa los datos.');
+      this.showToast('❌ No se pudo registrar el cliente', 'error')
     } else {
-      alert('✅ Cliente guardado correctamente');
-      this.router.navigate(['/dashboard/clients']);
+      this.showToast('✅ Se registró el cliente correctamente', 'success')
+      setTimeout(() => {
+        this.router.navigate(['/dashboard/clients']);
+      }, 2000)
     }
   }
 
@@ -65,5 +68,19 @@ export class ClientFormComponent implements OnInit {
     } else {
       console.error('Error al cargar últimos clientes:', error);
     }
+  }
+
+  toast = {
+    show: false,
+    message: '',
+    type: 'error' as 'success' | 'error',
+  };
+
+  private showToast(message: string, type: 'success' | 'error') {
+    this.toast.message = message;
+    this.toast.type = type;
+    this.toast.show = true;
+
+    setTimeout(() => (this.toast.show = false), 3000); // Se oculta tras 3s
   }
 }

@@ -51,10 +51,17 @@
   <div class="mt-6 text-right">
     <button
       (click)="saveEmployee()"
-      type="button"
+      type="submit"
       [disabled]="!employee.nombre || !employee.apellidos || !employee.email || !employee.password || !employee.puesto_trabajo"
       class="bg-[var(--color-primario)] hover:bg-[var(--color-primario-hover)] text-white px-6 py-2 rounded-lg font-semibold shadow transition duration-200">
       Guardar Trabajador
     </button>
   </div>
 </div>
+
+
+<app-message
+  [message]="toast.message"
+  [type]="toast.type"
+  [show]="toast.show"
+></app-message>

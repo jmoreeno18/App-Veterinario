@@ -1,0 +1,10 @@
+<div
+  *ngIf="show"
+  class="fixed bottom-4 right-0 transform-translate-x-1/2 w-1/4 px-6 py-3 rounded-lg shadow-lg text-white transition-all duration-300 z-50 text-base text-center"
+  [ngClass]="{
+    'bg-green-400': type === 'success',
+    'bg-red-400': type === 'error'
+  }"
+>
+  {{ message }}
+</div>

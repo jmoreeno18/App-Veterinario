@@ -79,6 +79,7 @@ showDeletePetModal: boolean = false;
 petToDelete: any = null;
 
 triggerDeletePet(pet: any) {
+  console.log(pet)
   this.petToDelete = pet;
   this.showDeletePetModal = true;
 }

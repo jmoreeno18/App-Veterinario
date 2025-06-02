@@ -42,9 +42,9 @@
   <!-- Tabla de clientes -->
  <app-client-table
   [clients]="clients"
-  [filtro]="filtro"
   (updated)="loadClients()"
   (delete)="openDeleteModal($event)"
+  [filtro]="filtro"
 ></app-client-table>
 
 
@@ -82,3 +82,9 @@
   </div>
 </div>
 
+<!-- Mensaje de exito o error al eliminar cliente-->
+<app-message
+  [message]="toast.message"
+  [type]="toast.type"
+  [show]="toast.show"
+></app-message>

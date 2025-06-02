@@ -7,6 +7,7 @@ import { IconPlusComponent } from '../../../components/icons/icon-plus.component
 import { IconUserComponent } from '../../../components/icons/icon-user.component';
 import { FormsModule } from '@angular/forms';
 import { FiltroClientesPipe } from './filtro-clientes.pipe';
+import { ToastMessageComponent } from '../../../components/client-components/message/message.component';
 
 @Component({
   selector: 'app-client-list',
@@ -18,6 +19,7 @@ import { FiltroClientesPipe } from './filtro-clientes.pipe';
     IconPlusComponent,
     IconUserComponent,
     FormsModule,
+    ToastMessageComponent
   ],
   templateUrl: './client-list.component.html',
 })
@@ -70,12 +72,27 @@ export class ClientListComponent implements OnInit {
       .eq('id', this.selectedClient.id);
 
     if (error) {
-      console.error('❌ Error al eliminar cliente:', error.message);
+      this.showToast('❌ Error al eliminar cliente.', 'error');
     } else {
       this.loadClients(); // Refresca la lista
+      this.showToast('✅ Cliente eliminado correctamente.', 'success');
     }
 
     this.closeDeleteModal();
+  }
+
+  toast = {
+    show: false,
+    message: '',
+    type: 'error' as 'success' | 'error',
+  };
+
+  private showToast(message: string, type: 'success' | 'error') {
+    this.toast.message = message;
+    this.toast.type = type;
+    this.toast.show = true;
+
+    setTimeout(() => (this.toast.show = false), 3000); // Se oculta tras 3s
   }
 }
 

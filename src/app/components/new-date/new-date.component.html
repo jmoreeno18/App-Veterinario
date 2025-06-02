@@ -1,0 +1,102 @@
+<!-- Botón para abrir modal -->
+<button
+  (click)="showModal = true"
+  class="flex items-center gap-2 bg-[var(--color-primario)] hover:bg-[var(--color-primario-hover)] text-white px-4 py-2 rounded-lg font-medium transition-colors cursor-pointer"
+>
+  <icon-plus></icon-plus>
+  Nueva Cita
+</button>
+
+<!-- Modal -->
+<div *ngIf="showModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center">
+  <div class="bg-white w-full max-w-lg p-6 rounded-xl shadow-xl relative animate-fade-in">
+
+    <!-- Cerrar -->
+    <button (click)="showModal = false" class="absolute top-4 right-4 text-gray-400 hover:text-black transition">
+      ✖️
+    </button>
+
+    <h2 class="text-xl font-bold text-[var(--color-primario)] mb-4">Nueva Cita</h2>
+
+    <form class="grid grid-cols-1 gap-4 text-sm">
+
+      <!-- Cliente -->
+      <div>
+        <label class="font-medium">Cliente</label>
+        <select
+          [ngModel]="selectedClienteId"
+          (ngModelChange)="loadMascotasDelCliente($event)"
+          name="cliente_id"
+          class="w-full border rounded px-2 py-1"
+        >
+          <option [ngValue]="null" disabled selected>Selecciona un cliente</option>
+          <option *ngFor="let c of clientes" [ngValue]="c.id">{{ c.nombre }} {{ c.apellidos }}</option>
+        </select>
+      </div>
+
+      <!-- Mascota -->
+      <div>
+        <label class="font-medium">Mascota</label>
+        <select [(ngModel)]="newDate.mascota_id" name="mascota_id" class="w-full border rounded px-2 py-1">
+          <option [ngValue]="null" disabled selected>Selecciona una mascota</option>
+          <option *ngFor="let m of mascotas" [ngValue]="m.id">{{ m.nombre }} ({{ m.especie }})</option>
+        </select>
+      </div>
+
+      <!-- Fecha -->
+      <div>
+        <label class="font-medium">Fecha</label>
+        <input [(ngModel)]="newDate.fecha" name="fecha" type="date" class="w-full border rounded px-2 py-1" />
+      </div>
+
+      <!-- Hora -->
+      <div>
+        <label class="font-medium">Hora</label>
+        <input [(ngModel)]="newDate.hora" name="hora" type="time" class="w-full border rounded px-2 py-1" />
+      </div>
+
+      <!-- Motivo -->
+      <div>
+        <label class="font-medium">Motivo</label>
+        <input [(ngModel)]="newDate.motivo" name="motivo" type="text" class="w-full border rounded px-2 py-1" />
+      </div>
+
+      <!-- Veterinario -->
+      <div>
+        <label class="font-medium">Veterinario</label>
+        <select [(ngModel)]="newDate.trabajador_id" name="trabajador_id" class="w-full border rounded px-2 py-1">
+          <option [ngValue]="null" disabled selected>Selecciona un veterinario</option>
+          <option *ngFor="let t of trabajadores" [ngValue]="t.id">
+            {{ t.nombre }} {{ t.apellidos }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Estado -->
+      <div>
+        <label class="font-medium">Estado</label>
+        <select [(ngModel)]="newDate.estado" name="estado" class="w-full border rounded px-2 py-1">
+          <option value="pendiente">Pendiente</option>
+          <option value="confirmada">Confirmada</option>
+          <option value="cancelada">Cancelada</option>
+        </select>
+      </div>
+
+      <!-- Notas -->
+      <div>
+        <label class="font-medium">Notas pre-visita</label>
+        <textarea [(ngModel)]="newDate.notas_previsita" name="notas_previsita" rows="2" class="w-full border rounded px-2 py-1"></textarea>
+      </div>
+    </form>
+
+    <!-- Botón guardar -->
+    <div class="text-right mt-4">
+      <button
+        (click)="saveDate()"
+        class="bg-[var(--color-primario)] hover:bg-[var(--color-primario-hover)] text-white px-5 py-2 rounded-lg font-semibold"
+      >
+        Guardar Cita
+      </button>
+    </div>
+  </div>
+</div>

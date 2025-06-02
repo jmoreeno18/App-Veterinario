@@ -5,7 +5,6 @@ import { ClientListComponent } from './pages/clients/client-list/client-list.com
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { EmployeeListComponent } from './pages/employees/employee-list/employee-list.component';
 import { EmployeeFormComponent } from './pages/employees/employee-form/employee-form.component';
-import { PetListComponent } from './pages/pets/pet-list/pet-list.component';
 import { PetFormComponent } from './pages/pets/pet-form/pet-form.component';
 import { CalendarPageComponent } from './pages/calendar-page/calendar-page.component';
 import { ResetPasswordPageComponent } from './pages/reset-password-page/reset-password-page.component';
@@ -49,7 +48,6 @@ export const routes: Routes = [
       { path: 'clients/new', component: ClientFormComponent },
       { path: 'employees', component: EmployeeListComponent },
       { path: 'employees/new', component: EmployeeFormComponent },
-      { path: 'pets', component: PetListComponent },
       { path: 'pets/new', component: PetFormComponent },
       { path: 'calendar', component: CalendarPageComponent },
     ],
