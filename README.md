@@ -1,59 +1,37 @@
-# Mockvet
+🐾 Clínica Veterinaria - App de Gestión
+Aplicación web para la gestión de una clínica veterinaria, desarrollada con Angular y Supabase como backend. Permite registrar clientes, mascotas, trabajadores y gestionar citas de forma sencilla e intuitiva.
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.8.
+👥 Proyecto en equipo
+Este proyecto ha sido desarrollado por un equipo de 5 desarrolladores como parte de un trabajo colaborativo.
 
-## Development server
+🔧 Mi contribución personal
+Durante el desarrollo del proyecto, me he encargado de implementar:
 
-To start a local development server, run:
+🐶 Agregar nueva mascota
 
-```bash
+👤 Registrar nuevo cliente
+
+📋 Mostrar lista de clientes
+
+👨‍⚕️ Registrar nuevo trabajador
+
+🧑‍⚕️ Mostrar lista de trabajadores
+
+📅 Crear nueva cita
+
+Todas estas funcionalidades incluyen validaciones de formularios, interacción con Supabase y actualización dinámica del estado de la aplicación en tiempo real.
+
+🛠️ Tecnologías utilizadas
+Angular 19+
+
+TypeScript
+
+Supabase (base de datos, autenticación, API)
+
+HTML5 / SCSS
+
+🚀 Cómo ejecutar el proyecto
+npm install
 ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Luego abre tu navegador en:
+👉 http://localhost:4200/
